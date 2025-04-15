@@ -2,8 +2,13 @@ import SwiftUI
 
 struct TitleView: View {
     var body: some View {
-        Text("Songle")
-            .font(.largeTitle)
-        Spacer()
+        VStack{
+            Text("Songle")
+                .font(.largeTitle)
+            Spacer()
+        }
+        NavigationStack{
+            NavigationLink("Go to guess view", destination: GuessView())
+        }
     }
 }
