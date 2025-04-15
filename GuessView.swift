@@ -5,8 +5,12 @@ struct GuessView: View {
         VStack {
             Image("Bristol")
                 .resizable()
-            Text("Bristol")
+                .frame(width: 300, height: 300)
+                .blur(radius: 20)
+            Text("Song: Bristol")
+            Text("Artist: Feng")
         }
+        
     }
 }
 
