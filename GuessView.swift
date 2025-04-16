@@ -10,7 +10,6 @@ struct GuessView: View {
             Text("Song: Bristol")
             Text("Artist: Feng")
         }
-        
     }
 }
 
