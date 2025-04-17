@@ -11,9 +11,9 @@ struct GuessView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
-            //            Text("Song: Bristol")
-            //            Text("Artist: Feng")
-            //            Image("Bristol")
+            //            Text("Song: Girls Trip")
+            //            Text("Artist: YT")
+            //            Image("oi")
             //                .resizable()
             //                .frame(width: 300, height: 300)
             //                .blur(radius: 20)
@@ -42,7 +42,7 @@ struct GuessView: View {
         }
     }
     func playSong(){
-        let soundName = "bristolSong"
+        let soundName = "girlsTrip"
         guard let soundFile = NSDataAsset(name: soundName) else {
             print("👺 \(soundName) is an invalid sound file")
             return
