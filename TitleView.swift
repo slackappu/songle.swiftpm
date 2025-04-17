@@ -23,8 +23,8 @@ struct TitleView: View {
             .opacity(0.75)
             Divider()
             
-        NavigationStack{
-            NavigationLink("Go to Guess View", destination: GuessView())
+            NavigationStack{
+                NavigationLink("Go to Guess View", destination: GuessView())
             }
         }
     }
