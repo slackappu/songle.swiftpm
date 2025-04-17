@@ -35,10 +35,12 @@ struct TitleView: View {
             
         NavigationStack{
             NavigationLink("Go to Guess View", destination: GuessView())
-                .font(.largeTitle)
+                .font(.title2)
                 .foregroundStyle(.white)
-                .background(.black)
-                .cornerRadius(15)
+                .padding()
+                .background(.blue)
+                .cornerRadius(10)
+                .shadow(color: .purple, radius: 5)
             }
             
             Button {
@@ -48,15 +50,15 @@ struct TitleView: View {
                     .font(.title3)
                     .foregroundStyle(.white)
                     .padding()
-                    .background(.blue)
+                    .background(.red)
                     .cornerRadius(10)
-                    .shadow(color: .purple, radius: 5)
+                    .shadow(color: .orange, radius: 5)
             }
             .padding(.top, 20)
             .alert(isPresented: $showInstructions) {
                 Alert(
                     title: Text("Guess View Instructions"),
-                    message: Text("• You have 6 tries to guess the correct song 🎶\n\n• If you get it wrong, the song will play again 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
+                    message: Text("• You have 6 tries to guess the correct song. 🎶\n\n• If you get it wrong, the song will play again. 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
                     dismissButton: .default(Text("Got it!"))
                     )
             }
