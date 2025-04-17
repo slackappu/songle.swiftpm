@@ -35,7 +35,7 @@ struct TitleView: View {
         NavigationStack{
             NavigationLink("Go to Guess View", destination: GuessView())
                 .font(.largeTitle)
-                .foregroundStyle(.blue)
+                .foregroundStyle(.white)
                 .background(.black)
                 .cornerRadius(15)
             }
