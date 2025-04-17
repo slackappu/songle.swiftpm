@@ -5,6 +5,7 @@ import AVFAudio
 struct GuessView: View {
     @State var userGuess: String = ""
     @State var audioPlayer: AVAudioPlayer!
+    @State var isPlaying = false
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
@@ -20,7 +21,13 @@ struct GuessView: View {
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
             Button {
-                playSong()
+                if !isPlaying {
+                    playSong()
+                    isPlaying = true
+                } else if isPlaying {
+                    audioPlayer.pause()
+                    isPlaying = false
+                }
                 print("User's guess: \(userGuess)")
             } label: {
                 Image(systemName: "play.circle.fill")
