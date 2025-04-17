@@ -11,34 +11,34 @@ struct GuessView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+            //            Text("Song: Bristol")
+            //            Text("Artist: Feng")
+            //            Image("Bristol")
+            //                .resizable()
+            //                .frame(width: 300, height: 300)
+            //                .blur(radius: 20)
+            //            Text("Song: Bristol")
+            //            Text("Artist: Feng")
+            Button {
+                playSong()
+                print("User's guess: \(userGuess)")
+            } label: {
+                Image(systemName: "play.circle.fill")
+            }
             
             TextField("Enter your song guess", text: $userGuess)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
                 .padding(.bottom, 20)
-            
-            Button {
-                playSong()
-                print("User's guess: \(userGuess)")
-            } label: {
-                Text("Submit Guess")
-                    .font(.title3)
-                    .padding()
-                    .background(Color.red)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-                Image(systemName: "play.circle.fill")
-            }
+            Text("Submit Guess")
+                .font(.title3)
+                .padding()
+                .background(Color.red)
+                .foregroundStyle(.white)
+                .cornerRadius(10)
 
-            Text("Song: Bristol")
-            Text("Artist: Feng")
-//            Image("Bristol")
-//                .resizable()
-//                .frame(width: 300, height: 300)
-//                .blur(radius: 20)
-//            Text("Song: Bristol")
-//            Text("Artist: Feng")
+
         }
     }
     func playSong(){
