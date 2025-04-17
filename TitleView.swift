@@ -15,7 +15,7 @@ struct TitleView: View {
                    .background(.black)
                        .foregroundColor(.white)
                        .cornerRadius(10)
-                       .shadow(color: .pink, radius: 10, x: 0, y: 0)
+                       .shadow(color: .red, radius: 10, x: 0, y: 0)
                        .shadow(color: .purple, radius: 20, x: 0, y: 0)
         }
         VStack(spacing: 10){
