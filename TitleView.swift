@@ -3,11 +3,20 @@ import SwiftUI
 struct TitleView: View {
     var body: some View {
         VStack{
-            Text(" 🎵 Songle 🎵")
-                .font(.largeTitle)
-                .font(.custom("Times New Roman", size: 40))
-                .bold()
-            Divider()
+            Text("Songle 🎵")
+                .font(.system(size: 50, weight: .bold))
+                   .foregroundStyle(
+                       LinearGradient(
+                        gradient: Gradient(colors: [.pink, .yellow, .red]),
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing
+                       )
+                   )
+                   .background(.black)
+                       .foregroundColor(.white)
+                       .cornerRadius(10)
+                       .shadow(color: .red, radius: 10, x: 0, y: 0)
+                       .shadow(color: .purple, radius: 20, x: 0, y: 0)
         }
         VStack(spacing: 10){
             Text("How to Play")
@@ -23,8 +32,12 @@ struct TitleView: View {
             .opacity(0.75)
             Divider()
             
-            NavigationStack{
-                NavigationLink("Go to Guess View", destination: GuessView())
+        NavigationStack{
+            NavigationLink("Go to Guess View", destination: GuessView())
+                .font(.largeTitle)
+                .foregroundStyle(.white)
+                .background(.black)
+                .cornerRadius(15)
             }
         }
     }
