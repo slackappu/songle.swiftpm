@@ -3,11 +3,11 @@ import SwiftUI
 struct TitleView: View {
     var body: some View {
         VStack{
-            Text("Songle")
+            Text("Songle 🎵")
                 .font(.system(size: 50, weight: .bold))
                    .foregroundStyle(
                        LinearGradient(
-                        gradient: Gradient(colors: [.purple, .blue, .green]),
+                        gradient: Gradient(colors: [.pink, .yellow, .red]),
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing
                        )
