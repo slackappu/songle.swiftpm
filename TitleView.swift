@@ -3,7 +3,8 @@ import SwiftUI
 struct TitleView: View {
     @State var showInstructions = false
     var body: some View {
-        VStack{
+        NavigationStack{
+            VStack{
             Text("Songle 🎵")
                 .font(.system(size: 50, weight: .bold))
                    .foregroundStyle(
@@ -19,6 +20,7 @@ struct TitleView: View {
                        .shadow(color: .red, radius: 10, x: 0, y: 0)
                        .shadow(color: .purple, radius: 20, x: 0, y: 0)
         }
+            Divider()
         VStack(spacing: 10){
             Text("How to Play")
                 .underline()
@@ -32,8 +34,9 @@ struct TitleView: View {
             .frame(width:350, alignment: .leading)
             .opacity(0.75)
             Divider()
-            
-        NavigationStack{
+            Spacer()
+        
+        
             NavigationLink("Go to Guess View", destination: GuessView())
                 .font(.title2)
                 .foregroundStyle(.white)
@@ -42,7 +45,7 @@ struct TitleView: View {
                 .cornerRadius(10)
                 .shadow(color: .purple, radius: 5)
             }
-            
+        .padding()
             Button {
                 showInstructions.toggle()
             } label: {
@@ -63,6 +66,5 @@ struct TitleView: View {
                     )
             }
         }
-        .padding()
     }
 }
