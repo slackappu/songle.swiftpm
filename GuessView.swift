@@ -4,9 +4,9 @@ import AVFAudio
 
 struct GuessView: View {
     @State var userGuess: String = ""
+    @State var audioPlayer: AVAudioPlayer?
     @State var showAlert = false
     @State var isCorrect = false
-    @State var audioPlayer: AVAudioPlayer!
     @State var isPlaying = false
     var body: some View {
         VStack {
@@ -23,16 +23,21 @@ struct GuessView: View {
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
             Button {
-                if !isPlaying {
+                if let player = audioPlayer {
+                    if player.isPlaying {
+                        player.pause()
+                        isPlaying = false
+                    } else {
+                        player.play()
+                        isPlaying = true
+                    }
+                } else {
                     playSong()
-                    isPlaying = true
-                } else if isPlaying {
-                    audioPlayer.pause()
-                    isPlaying = false
                 }
+                
                 print("User's guess: \(userGuess)")
             } label: {
-                Image(systemName: "play.circle.fill")
+                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
             }
             
             TextField("Enter your song guess", text: $userGuess)
@@ -77,7 +82,7 @@ struct GuessView: View {
         }
         do {
             audioPlayer = try AVAudioPlayer(data: soundFile.data)
-            audioPlayer.play()
+            audioPlayer?.play()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
