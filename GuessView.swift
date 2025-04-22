@@ -5,6 +5,9 @@ import AVFAudio
 struct GuessView: View {
     @State var userGuess: String = ""
     @State var audioPlayer: AVAudioPlayer?
+    @State var showAlert = false
+    @State var isCorrect = false
+    @State var audioPlayer: AVAudioPlayer!
     @State var isPlaying = false
     var body: some View {
         VStack {
@@ -39,20 +42,39 @@ struct GuessView: View {
             }
             
             TextField("Enter your song guess", text: $userGuess)
+                .multilineTextAlignment(.center)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
                 .padding(.bottom, 20)
-            Text("Submit Guess")
-                .font(.title3)
-                .padding()
-                .background(Color.red)
-                .foregroundStyle(.white)
-                .cornerRadius(10)
-            
-            
+            Text("Make sure you have proper spelling!")
+                .foregroundStyle(.gray)
+            Button("Submit Guess"){
+                checkTheGuess()
+            }
+            .font(.title3)
+            .padding()
+            .background(Color.red)
+            .foregroundStyle(.white)
+            .cornerRadius(10)
+        }
+        .alert(isPresented: $showAlert){
+            Alert(
+                title: Text(isCorrect ? "Correct" : "Incorrect."),
+                message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
+    
+    
+    func checkTheGuess(){
+        let answer = "girls trip"
+        isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
+        showAlert = true
+        userGuess = ""
+    }
+    
     func playSong(){
         let soundName = "girlsTrip"
         guard let soundFile = NSDataAsset(name: soundName) else {
