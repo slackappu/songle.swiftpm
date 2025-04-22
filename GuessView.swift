@@ -33,6 +33,7 @@ struct GuessView: View {
                     }
                 } else {
                     playSong()
+                    isPlaying = true
                 }
                 
                 print("User's guess: \(userGuess)")
@@ -68,14 +69,14 @@ struct GuessView: View {
     
     
     func checkTheGuess(){
-        let answer = "girls trip"
+        let answer = "long time"
         isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
         showAlert = true
         userGuess = ""
     }
     
     func playSong(){
-        let soundName = "girlsTrip"
+        let soundName = "longTime"
         guard let soundFile = NSDataAsset(name: soundName) else {
             print("👺 \(soundName) is an invalid sound file")
             return
