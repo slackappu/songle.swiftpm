@@ -34,8 +34,9 @@ struct TitleView: View {
                 .opacity(0.75)
                 Divider()
                 Spacer()
-                NavigationLink("Go to Guess View", destination: GuessView())
-                    .font(.title2)
+                NavigationLink("Start the game!", destination: GuessView())
+                    .frame(width: 300, height: 100)
+                    .font(.largeTitle)
                     .foregroundStyle(.white)
                     .padding()
                     .background(.blue)
@@ -47,21 +48,21 @@ struct TitleView: View {
             Button {
                 showInstructions.toggle()
             } label: {
-                Text("Instructions for Guess View")
-                    .font(.title3)
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(.red)
-                    .cornerRadius(10)
-                    .shadow(color: .orange, radius: 5)
-            }
-            .padding(.top, 20)
-            .alert(isPresented: $showInstructions) {
-                Alert(
-                    title: Text("Guess View Instructions"),
-                    message: Text("• You have 6 tries to guess the correct song. 🎶\n\n• If you get it wrong, the song will play again. 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
-                    dismissButton: .default(Text("Got it!"))
-                )
+//                Text("Instructions for Guess View")
+//                    .font(.title3)
+//                    .foregroundStyle(.white)
+//                    .padding()
+//                    .background(.red)
+//                    .cornerRadius(10)
+//                    .shadow(color: .orange, radius: 5)
+//            }
+//            .padding(.top, 20)
+//            .alert(isPresented: $showInstructions) {
+//                Alert(
+//                    title: Text("Guess View Instructions"),
+//                    message: Text("• You have 6 tries to guess the correct song. 🎶\n\n• If you get it wrong, the song will play again. 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
+//                    dismissButton: .default(Text("Got it!"))
+//                )
             }
         }
     }
