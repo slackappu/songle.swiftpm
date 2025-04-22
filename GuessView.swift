@@ -8,6 +8,7 @@ struct GuessView: View {
     @State var isCorrect = false
     @State var audioPlayer: AVAudioPlayer!
     @State var isPlaying = false
+    @State var Alerthi = false
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
@@ -57,6 +58,22 @@ struct GuessView: View {
                 title: Text(isCorrect ? "Correct" : "Incorrect."),
                 message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
                 dismissButton: .default(Text("OK"))
+            )
+        }
+        Button(action: {
+            Alerthi = true
+        }) {
+            Text("Tap For Fun Fact")
+                .background(.black)
+                .foregroundStyle(.white)
+                .font(.largeTitle)
+                .cornerRadius(10)
+        }
+        .alert(isPresented: $Alerthi) {
+            Alert(
+                title: Text("🎶 Fun Fact!"),
+                message: Text(" Made By Playboi Carti"),
+                dismissButton: .default(Text("Nice!"))
             )
         }
     }
