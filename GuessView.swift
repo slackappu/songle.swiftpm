@@ -7,7 +7,6 @@ struct GuessView: View {
     @State var audioPlayer: AVAudioPlayer?
     @State var showAlert = false
     @State var isCorrect = false
-    @State var audioPlayer: AVAudioPlayer!
     @State var isPlaying = false
     var body: some View {
         VStack {
