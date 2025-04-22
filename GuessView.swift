@@ -78,7 +78,10 @@ struct GuessView: View {
         .alert(isPresented: $Alerthi) {
             Alert(
                 title: Text("🎶 Fun Fact!"),
-                message: Text(" Made By Playboi Carti"),
+                message: Text("""
+                              Made By Playboi Carti.
+                              Carti's first number-one song on the Billboard Hot 100.
+                              """),
                 dismissButton: .default(Text("Nice!"))
             )
         }
