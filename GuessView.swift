@@ -108,6 +108,7 @@ struct GuessView: View {
         }
     }
     
+    
     func checkTheGuess(){
         let answer = "long time"
         isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
