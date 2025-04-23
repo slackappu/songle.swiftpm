@@ -3,7 +3,7 @@ import SwiftUI
 struct TitleView: View {
     @State var showInstructions = false
     var body: some View {
-        NavigationStack{
+        
             VStack{
                 Text("Songle 🎵")
                     .font(.system(size: 50, weight: .bold))
@@ -21,6 +21,7 @@ struct TitleView: View {
                     .shadow(color: .purple, radius: 20, x: 0, y: 0)
             }
             Divider()
+        NavigationStack{
             VStack(spacing: 15){
                 Text("How to Play")
                     .underline()

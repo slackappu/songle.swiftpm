@@ -45,12 +45,11 @@ struct GuessView: View {
             
             TextField("Enter your song guess", text: $userGuess)
                 .multilineTextAlignment(.center)
-                .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
-                .padding(.bottom, 20)
             Text("Make sure you have proper spelling!")
                 .foregroundStyle(.gray)
+                .padding(.bottom, 20)
             Button("Submit Guess"){
                 checkTheGuess()
             }
@@ -70,10 +69,11 @@ struct GuessView: View {
         Button(action: {
             Alerthi = true
         }) {
-            Text("Tap For Fun Fact")
-                .background(.black)
+            Text("Tap For Hints")
+                .frame(width:150, height: 40)
+                .background(.orange)
                 .foregroundStyle(.white)
-                .font(.largeTitle)
+                .font(.title3)
                 .cornerRadius(10)
         }
         .alert(isPresented: $Alerthi) {
@@ -98,7 +98,7 @@ struct GuessView: View {
                 .shadow(color: .yellow, radius: 5)
         }
         .alert(isPresented: $revealSong) {
-            Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Try Again!")))
+            Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
         }
     }
     
