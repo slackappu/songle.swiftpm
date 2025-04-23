@@ -5,6 +5,9 @@ import AVFAudio
 struct GuessView: View {
     @State var userGuess: String = ""
     @State var audioPlayer: AVAudioPlayer?
+    @State var currentTime: TimeInterval = 0
+    @State var duration: TimeInterval = 0
+    @State var timer: Timer?
     @State var showAlert = false
     @State var isCorrect = false
     @State var isPlaying = false
@@ -24,6 +27,9 @@ struct GuessView: View {
             //                .blur(radius: 20)
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
+            Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
+                }
+        .padding(.bottom, 10)
             Button {
                 if let player = audioPlayer {
                     if player.isPlaying {
@@ -58,7 +64,7 @@ struct GuessView: View {
             .background(Color.red)
             .foregroundStyle(.white)
             .cornerRadius(10)
-        }
+        
         .alert(isPresented: $showAlert){
             Alert(
                 title: Text(isCorrect ? "Correct" : "Incorrect."),
@@ -117,13 +123,36 @@ struct GuessView: View {
         }
         do {
             audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            duration = audioPlayer?.duration ?? 0
             audioPlayer?.play()
+            startTimer()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
     }
-}
+    func startTimer() {
+        timer?.invalidate()
+        
+        var newTimer: Timer?
+        newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            DispatchQueue.main.async {
+                if let player = audioPlayer {
+                    currentTime = player.currentTime
+                    if !player.isPlaying {
+                       timer?.invalidate()
+                    }
+                }
+            }
+        }
+        timer = newTimer
+    }
 
+        func formatTime(time: TimeInterval) -> String {
+            let minutes = Int(time) / 60
+            let seconds = Int(time) % 60
+            return String(format: "%d:%02d", minutes, seconds)
+        }
+    }
 #Preview {
     GuessView()
 }
