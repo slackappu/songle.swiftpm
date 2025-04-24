@@ -110,14 +110,13 @@ struct GuessView: View {
     
     
     func checkTheGuess(){
-        guessCount += 1
+        
         let answer = "long time"
         isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
         showAlert = true
         userGuess = ""
         
         guessCount += 1
-        
         if guessCount >= 2 {
             showHintButton = true
         }
