@@ -27,6 +27,8 @@ struct TitleView: View {
                 Text("How to Play")
                     .underline()
                     .font(.title)
+                    .shadow(color: .red, radius: 10, x: 0, y: 0)
+                    .shadow(color: .purple, radius: 20, x: 0, y: 0)
                 VStack(spacing: 10){
                     Text("• A snippet of a song will play 👂            ")
                     Text("• You have 6 tries to guess the song 🎶")
@@ -34,6 +36,8 @@ struct TitleView: View {
                 }
                 .frame(width:350, alignment: .leading)
                 .opacity(0.75)
+                .shadow(color: .red, radius: 10, x: 0, y: 0)
+                .shadow(color: .purple, radius: 20, x: 0, y: 0)
                 Divider()
                 Spacer()
                 NavigationLink("Start the game!", destination: GuessView())

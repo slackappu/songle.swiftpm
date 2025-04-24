@@ -19,6 +19,7 @@ struct GuessView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+                .shadow(color: .yellow, radius: 5)
             //            Text("Song: Girls Trip")
             //            Text("Artist: YT")
             //            Image("oi")
@@ -30,6 +31,7 @@ struct GuessView: View {
             Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
                 }
         .padding(.bottom, 10)
+        .shadow(color: .yellow, radius: 5)
             Button {
                 if let player = audioPlayer {
                     if player.isPlaying {
@@ -53,9 +55,11 @@ struct GuessView: View {
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
+                .shadow(color: .yellow, radius: 5)
             Text("Make sure you have proper spelling!")
                 .foregroundStyle(.gray)
                 .padding(.bottom, 20)
+                .shadow(color: .yellow, radius: 5)
             Button("Submit Guess"){
                 checkTheGuess()
             }
