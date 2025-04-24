@@ -9,6 +9,7 @@ struct GuessView: View {
     @State var isCorrect = false
     @State var isPlaying = false
     @State var Alerthi = false
+    @State var timer: Timer?
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
@@ -24,19 +25,7 @@ struct GuessView: View {
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
             Button {
-                if let player = audioPlayer {
-                    if player.isPlaying {
-                        player.pause()
-                        isPlaying = false
-                    } else {
-                        player.play()
-                        isPlaying = true
-                    }
-                } else {
-                    playSong()
-                    isPlaying = true
-                }
-                
+                playSong()
                 print("User's guess: \(userGuess)")
             } label: {
                 Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
@@ -94,8 +83,12 @@ struct GuessView: View {
         showAlert = true
         userGuess = ""
     }
-    
-    func playSong(){
+    func stopSong(){
+        audioPlayer?.stop()
+        isPlaying = false
+        audioPlayer?.currentTime = 0
+    }
+    func startSong(){
         let soundName = "longTime"
         guard let soundFile = NSDataAsset(name: soundName) else {
             print("👺 \(soundName) is an invalid sound file")
@@ -104,8 +97,38 @@ struct GuessView: View {
         do {
             audioPlayer = try AVAudioPlayer(data: soundFile.data)
             audioPlayer?.play()
+            isPlaying = true
+            autoStop()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
+        }
+    }
+    func autoStop() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+            DispatchQueue.main.async{
+                if let player = audioPlayer, player.isPlaying {
+                    stopSong()
+                }
+            }
+        }
+    }
+    
+    func playSong(){
+        if let player = audioPlayer {
+            if player.isPlaying {
+                player.pause()
+                isPlaying = false
+                timer?.invalidate()
+            } else {
+                player.play()
+                isPlaying = true
+                autoStop()
+            }
+        } else {
+            startSong()
+            isPlaying = true
+//            autoStop()
         }
     }
 }
