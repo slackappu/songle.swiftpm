@@ -13,6 +13,7 @@ struct GuessView: View {
     @State var isPlaying = false
     @State var Alerthi = false
     @State var revealSong = false
+    @State var guessCount = 0
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
@@ -20,14 +21,7 @@ struct GuessView: View {
                 .fontWeight(.bold)
                 .padding()
                 .shadow(color: .yellow, radius: 5)
-            //            Text("Song: Girls Trip")
-            //            Text("Artist: YT")
-            //            Image("oi")
-            //                .resizable()
-            //                .frame(width: 300, height: 300)
-            //                .blur(radius: 20)
-            //            Text("Song: Bristol")
-            //            Text("Artist: Feng")
+            Text("Guesses left: \(6 - guessCount)")
             Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
                 }
         .padding(.bottom, 10)
@@ -116,6 +110,7 @@ struct GuessView: View {
     
     
     func checkTheGuess(){
+        guessCount += 1
         let answer = "long time"
         isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
         showAlert = true
