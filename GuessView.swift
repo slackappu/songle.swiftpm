@@ -19,7 +19,7 @@ struct GuessView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
-                .shadow(color: .yellow, radius: 5)
+                .shadow(color: .blue, radius: 5)
             //            Text("Song: Girls Trip")
             //            Text("Artist: YT")
             //            Image("oi")
@@ -31,7 +31,7 @@ struct GuessView: View {
             Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
                 }
         .padding(.bottom, 10)
-        .shadow(color: .yellow, radius: 5)
+        .shadow(color: .blue, radius: 5)
             Button {
                 if let player = audioPlayer {
                     if player.isPlaying {
@@ -55,11 +55,11 @@ struct GuessView: View {
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
-                .shadow(color: .yellow, radius: 5)
+                .shadow(color: .blue, radius: 5)
             Text("Make sure you have proper spelling!")
                 .foregroundStyle(.gray)
                 .padding(.bottom, 20)
-                .shadow(color: .yellow, radius: 5)
+                .shadow(color: .blue, radius: 5)
             Button("Submit Guess"){
                 checkTheGuess()
             }
@@ -68,7 +68,7 @@ struct GuessView: View {
             .background(Color.red)
             .foregroundStyle(.white)
             .cornerRadius(10)
-            .shadow(color: .yellow, radius: 5)
+            .shadow(color: .blue, radius: 5)
         
         .alert(isPresented: $showAlert){
             Alert(
@@ -86,7 +86,7 @@ struct GuessView: View {
                 .foregroundStyle(.white)
                 .font(.title3)
                 .cornerRadius(10)
-                .shadow(color: .yellow, radius: 5)
+                .shadow(color: .blue, radius: 5)
         }
         .alert(isPresented: $Alerthi) {
             Alert(
@@ -107,7 +107,7 @@ struct GuessView: View {
                 .padding()
                 .background(.green)
                 .cornerRadius(10)
-                .shadow(color: .yellow, radius: 5)
+                .shadow(color: .blue, radius: 5)
         }
         .alert(isPresented: $revealSong) {
             Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))

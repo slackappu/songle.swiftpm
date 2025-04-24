@@ -47,7 +47,7 @@ struct TitleView: View {
                     .padding()
                     .background(.blue)
                     .cornerRadius(10)
-                    .shadow(color: .purple, radius: 5)
+                    .shadow(color: .blue, radius: 5)
             }
             .padding()
             Spacer(minLength: 200)
