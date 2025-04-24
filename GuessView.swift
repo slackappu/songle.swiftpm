@@ -13,12 +13,17 @@ struct GuessView: View {
     @State var isPlaying = false
     @State var Alerthi = false
     @State var revealSong = false
+    @State var guessCount = 0
+    @State var showHintButton = false
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+                .shadow(color: .yellow, radius: 5)
+            Text("Guesses left: \(6 - guessCount)")
+                .shadow(color: .blue, radius: 5)
             //            Text("Song: Girls Trip")
             //            Text("Artist: YT")
             //            Image("oi")
@@ -59,25 +64,28 @@ struct GuessView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        Button(action: {
-            Alerthi = true
-        }) {
-            Text("Tap For Hints")
-                .frame(width:150, height: 40)
-                .background(.orange)
-                .foregroundStyle(.white)
-                .font(.title3)
-                .cornerRadius(10)
-        }
-        .alert(isPresented: $Alerthi) {
-            Alert(
-                title: Text("🎶 Fun Fact!"),
-                message: Text("""
+        if guessCount >= 2 {
+            Button(action: {
+                Alerthi = true
+            }) {
+                Text("Tap For Hints")
+                    .frame(width:150, height: 40)
+                    .background(.orange)
+                    .foregroundStyle(.white)
+                    .font(.title3)
+                    .cornerRadius(10)
+                    .shadow(color: .blue, radius: 5)
+            }
+            .alert(isPresented: $Alerthi) {
+                Alert(
+                    title: Text("🎶 Fun Fact!"),
+                    message: Text("""
                               Made By Playboi Carti.
                               Carti's first number-one song on the Billboard Hot 100.
                               """),
-                dismissButton: .default(Text("Nice!"))
-            )
+                    dismissButton: .default(Text("Nice!"))
+                )
+            }
         }
         Button(action: {
             revealSong = true
@@ -88,6 +96,7 @@ struct GuessView: View {
                 .padding()
                 .background(.green)
                 .cornerRadius(10)
+                .shadow(color: .blue, radius: 5)
         }
         .alert(isPresented: $revealSong) {
             Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
@@ -96,10 +105,17 @@ struct GuessView: View {
     
     
     func checkTheGuess(){
+        guessCount += 1
         let answer = "long time"
         isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
         showAlert = true
         userGuess = ""
+        
+        guessCount += 1
+        
+        if guessCount >= 2 {
+            showHintButton = true
+        }
     }
     func stopSong(){
         audioPlayer?.stop()
