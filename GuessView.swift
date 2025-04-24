@@ -29,34 +29,34 @@ struct GuessView: View {
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
             Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
-                }
+        }
         .padding(.bottom, 10)
         .shadow(color: .yellow, radius: 5)
-            Button {
-                playSong()
-                print("User's guess: \(userGuess)")
-            } label: {
-                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-            }
-            
-            TextField("Enter your song guess", text: $userGuess)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .shadow(color: .yellow, radius: 5)
-            Text("Make sure you have proper spelling!")
-                .foregroundStyle(.gray)
-                .padding(.bottom, 20)
-                .shadow(color: .yellow, radius: 5)
-            Button("Submit Guess"){
-                checkTheGuess()
-            }
-            .font(.title3)
-            .padding()
-            .background(Color.red)
-            .foregroundStyle(.white)
-            .cornerRadius(10)
+        Button {
+            playSong()
+            print("User's guess: \(userGuess)")
+        } label: {
+            Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+        }
+        
+        TextField("Enter your song guess", text: $userGuess)
+            .multilineTextAlignment(.center)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .frame(width: 300)
             .shadow(color: .yellow, radius: 5)
+        Text("Make sure you have proper spelling!")
+            .foregroundStyle(.gray)
+            .padding(.bottom, 20)
+            .shadow(color: .yellow, radius: 5)
+        Button("Submit Guess"){
+            checkTheGuess()
+        }
+        .font(.title3)
+        .padding()
+        .background(Color.red)
+        .foregroundStyle(.white)
+        .cornerRadius(10)
+        .shadow(color: .yellow, radius: 5)
         
         .alert(isPresented: $showAlert){
             Alert(
@@ -131,54 +131,58 @@ struct GuessView: View {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
     }
+    
     func autoStop() {
-    func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
             DispatchQueue.main.async{
                 if let player = audioPlayer, player.isPlaying {
                     stopSong()
-        
-        var newTimer: Timer?
-        newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            DispatchQueue.main.async {
-                if let player = audioPlayer {
-                    currentTime = player.currentTime
-                    if !player.isPlaying {
-                       timer?.invalidate()
-                    }
                 }
             }
         }
     }
-    
-    func playSong(){
-        if let player = audioPlayer {
-            if player.isPlaying {
-                player.pause()
-                isPlaying = false
-                timer?.invalidate()
-            } else {
-                player.play()
-                isPlaying = true
-                autoStop()
+            func startTimer() {
+                var newTimer: Timer?
+                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                    DispatchQueue.main.async {
+                        if let player = audioPlayer {
+                            currentTime = player.currentTime
+                            if !player.isPlaying {
+                                timer?.invalidate()
+                            }
+                        }
+                    }
+                }
+                timer = newTimer
             }
-        } else {
-            startSong()
-            isPlaying = true
-//            autoStop()
+            func playSong(){
+                if let player = audioPlayer {
+                    if player.isPlaying {
+                        player.pause()
+                        isPlaying = false
+                        timer?.invalidate()
+                    } else {
+                        player.play()
+                        isPlaying = true
+                        autoStop()
+                    }
+                } else {
+                    startSong()
+                    isPlaying = true
+                    //            autoStop()
+                }
+            }
         }
-    }
-}
-        timer = newTimer
-    }
-
+        
+        
         func formatTime(time: TimeInterval) -> String {
             let minutes = Int(time) / 60
             let seconds = Int(time) % 60
             return String(format: "%d:%02d", minutes, seconds)
         }
-    }
+
+
 #Preview {
     GuessView()
 }
