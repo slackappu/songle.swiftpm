@@ -18,7 +18,7 @@ struct TitleView: View {
                 .background(.black)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-                .shadow(color: .red, radius: 11, x: 0, y: 0)
+  //              .shadow(color: .red, radius: 11, x: 0, y: 0)
                 .shadow(color: .purple, radius: 22, x: 0, y: 0)
         }
         Divider()
