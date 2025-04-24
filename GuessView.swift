@@ -64,6 +64,7 @@ struct GuessView: View {
             .background(Color.red)
             .foregroundStyle(.white)
             .cornerRadius(10)
+            .shadow(color: .yellow, radius: 5)
         
         .alert(isPresented: $showAlert){
             Alert(
@@ -81,6 +82,7 @@ struct GuessView: View {
                 .foregroundStyle(.white)
                 .font(.title3)
                 .cornerRadius(10)
+                .shadow(color: .yellow, radius: 5)
         }
         .alert(isPresented: $Alerthi) {
             Alert(
