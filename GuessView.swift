@@ -5,17 +5,21 @@ import AVFAudio
 struct GuessView: View {
     @State var userGuess: String = ""
     @State var audioPlayer: AVAudioPlayer?
+    @State var currentTime: TimeInterval = 0
+    @State var duration: TimeInterval = 0
+    @State var timer: Timer?
     @State var showAlert = false
     @State var isCorrect = false
     @State var isPlaying = false
     @State var Alerthi = false
-    @State var timer: Timer?
+    @State var revealSong = false
     var body: some View {
         VStack {
             Text("Guess the Song 🎶")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+                .shadow(color: .yellow, radius: 5)
             //            Text("Song: Girls Trip")
             //            Text("Artist: YT")
             //            Image("oi")
@@ -24,6 +28,10 @@ struct GuessView: View {
             //                .blur(radius: 20)
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
+            Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
+                }
+        .padding(.bottom, 10)
+        .shadow(color: .yellow, radius: 5)
             Button {
                 playSong()
                 print("User's guess: \(userGuess)")
@@ -33,12 +41,13 @@ struct GuessView: View {
             
             TextField("Enter your song guess", text: $userGuess)
                 .multilineTextAlignment(.center)
-                .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 300)
-                .padding(.bottom, 20)
+                .shadow(color: .yellow, radius: 5)
             Text("Make sure you have proper spelling!")
                 .foregroundStyle(.gray)
+                .padding(.bottom, 20)
+                .shadow(color: .yellow, radius: 5)
             Button("Submit Guess"){
                 checkTheGuess()
             }
@@ -47,7 +56,8 @@ struct GuessView: View {
             .background(Color.red)
             .foregroundStyle(.white)
             .cornerRadius(10)
-        }
+            .shadow(color: .yellow, radius: 5)
+        
         .alert(isPresented: $showAlert){
             Alert(
                 title: Text(isCorrect ? "Correct" : "Incorrect."),
@@ -58,11 +68,13 @@ struct GuessView: View {
         Button(action: {
             Alerthi = true
         }) {
-            Text("Tap For Fun Fact")
-                .background(.black)
+            Text("Tap For Hints")
+                .frame(width:150, height: 40)
+                .background(.orange)
                 .foregroundStyle(.white)
-                .font(.largeTitle)
+                .font(.title3)
                 .cornerRadius(10)
+                .shadow(color: .yellow, radius: 5)
         }
         .alert(isPresented: $Alerthi) {
             Alert(
@@ -73,6 +85,20 @@ struct GuessView: View {
                               """),
                 dismissButton: .default(Text("Nice!"))
             )
+        }
+        Button(action: {
+            revealSong = true
+        }) {
+            Text("Reveal Song!")
+                .font(.title3)
+                .foregroundStyle(.white)
+                .padding()
+                .background(.green)
+                .cornerRadius(10)
+                .shadow(color: .yellow, radius: 5)
+        }
+        .alert(isPresented: $revealSong) {
+            Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
         }
     }
     
@@ -96,19 +122,31 @@ struct GuessView: View {
         }
         do {
             audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            duration = audioPlayer?.duration ?? 0
             audioPlayer?.play()
             isPlaying = true
             autoStop()
+            startTimer()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
     }
     func autoStop() {
+    func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
             DispatchQueue.main.async{
                 if let player = audioPlayer, player.isPlaying {
                     stopSong()
+        
+        var newTimer: Timer?
+        newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            DispatchQueue.main.async {
+                if let player = audioPlayer {
+                    currentTime = player.currentTime
+                    if !player.isPlaying {
+                       timer?.invalidate()
+                    }
                 }
             }
         }
@@ -132,7 +170,15 @@ struct GuessView: View {
         }
     }
 }
+        timer = newTimer
+    }
 
+        func formatTime(time: TimeInterval) -> String {
+            let minutes = Int(time) / 60
+            let seconds = Int(time) % 60
+            return String(format: "%d:%02d", minutes, seconds)
+        }
+    }
 #Preview {
     GuessView()
 }
