@@ -32,12 +32,31 @@ struct GuessView: View {
             //            Text("Artist: Feng")
             Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
         }
-        .padding(.bottom, 10)
-        Button {
-            playSong()
-            print("User's guess: \(userGuess)")
-        } label: {
-            Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+        .padding(3)
+        HStack(spacing: 30){
+            Button {
+                playSong()
+                print("User's guess: \(userGuess)")
+            } label: {
+                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+            }
+            Button(action: {
+                if let player = audioPlayer, player.isPlaying {
+                    player.currentTime = 0
+                    player.play()
+                    startTimer()
+                    autoStop()
+                }
+            }){
+                Image(systemName: "arrow.clockwise.circle.fill")
+                    .resizable()
+                    .foregroundColor(.blue)
+                    .frame(width: 35, height: 35)
+                    .opacity(isPlaying ? 1.0 : 0.4)
+            }
+            .disabled(!isPlaying)
         }
         
         TextField("Enter your song guess", text: $userGuess)
