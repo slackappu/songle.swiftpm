@@ -104,19 +104,21 @@ struct GuessView: View {
                 )
             }
         }
-        Button(action: {
-            revealSong = true
-        }) {
-            Text("Reveal Song!")
-                .font(.title3)
-                .foregroundStyle(.white)
-                .padding()
-                .background(.green)
-                .cornerRadius(10)
-                .shadow(color: .blue, radius: 5)
-        }
-        .alert(isPresented: $revealSong) {
-            Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
+        if guessCount >= 6 {
+            Button(action: {
+                revealSong = true
+            }) {
+                Text("Reveal Song!")
+                    .font(.title3)
+                    .foregroundStyle(.white)
+                    .padding()
+                    .background(.green)
+                    .cornerRadius(10)
+                    .shadow(color: .blue, radius: 5)
+            }
+            .alert(isPresented: $revealSong) {
+                Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
+            }
         }
     }
     
