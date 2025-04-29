@@ -8,6 +8,7 @@ struct GuessView: View {
     @State var currentTime: TimeInterval = 0
     @State var duration: TimeInterval = 0
     @State var timer: Timer?
+    @State var userPreviousGuesses: [String] = []
     @State var showAlert = false
     @State var isCorrect = false
     @State var isPlaying = false
@@ -16,21 +17,29 @@ struct GuessView: View {
     @State var guessCount = 0
     @State var showHintButton = false
     var body: some View {
-        VStack {
+        VStack{
             Text("Guess the Song 🎶")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .padding()
-            Text("Guesses left: \(6 - guessCount)")
-            //            Text("Song: Girls Trip")
-            //            Text("Artist: YT")
-            //            Image("oi")
-            //                .resizable()
-            //                .frame(width: 300, height: 300)
-            //                .blur(radius: 20)
-            //            Text("Song: Bristol")
-            //            Text("Artist: Feng")
-            Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
+                .padding(.bottom, 10)
+            
+            ForEach(userPreviousGuesses, id: \.self) { guess in
+                Text("• \(guess)")
+                    .font(.body)
+                    .foregroundStyle(.gray)
+            }
+            VStack(spacing:15){
+                Text("Guesses left: \(6 - guessCount)")
+                //            Text("Song: Girls Trip")
+                //            Text("Artist: YT")
+                //            Image("oi")
+                //                .resizable()
+                //                .frame(width: 300, height: 300)
+                //                .blur(radius: 20)
+                //            Text("Song: Bristol")
+                //            Text("Artist: Feng")
+                Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
+            }
         }
         .padding(3)
         HStack(spacing: 30){
@@ -124,9 +133,11 @@ struct GuessView: View {
     
     
     func checkTheGuess(){
+        let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
+            userPreviousGuesses.append(trimmedGuess)
         
         let answer = "long time"
-        isCorrect = userGuess.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == answer
+        isCorrect = trimmedGuess.lowercased() == answer
         showAlert = true
         userGuess = ""
         
@@ -168,8 +179,8 @@ struct GuessView: View {
             }
         }
     }
-            func startTimer() {
-                var newTimer: Timer?
+        func startTimer() {
+            var newTimer: Timer?
                 newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
                     DispatchQueue.main.async {
                         if let player = audioPlayer {
@@ -180,8 +191,9 @@ struct GuessView: View {
                         }
                     }
                 }
-                timer = newTimer
+        timer = newTimer
             }
+    
             func playSong(){
                 if let player = audioPlayer {
                     if player.isPlaying {
