@@ -1,16 +1,16 @@
 import SwiftUI
 import AVFoundation
-import AVFAudio
 
 struct GuessView: View {
+    @StateObject var audioManager = AudioManager()
     @State var userGuess: String = ""
     @State var audioPlayer: AVAudioPlayer?
-    @State var currentTime: TimeInterval = 0
-    @State var duration: TimeInterval = 0
-    @State var timer: Timer?
+//    @State var currentTime: TimeInterval = 0
+//    @State var duration: TimeInterval = 0
+//    @State var timer: Timer?
     @State var showAlert = false
     @State var isCorrect = false
-    @State var isPlaying = false
+ //   @State var isPlaying = false
     @State var Alerthi = false
     @State var revealSong = false
     @State var guessCount = 0
@@ -30,33 +30,34 @@ struct GuessView: View {
             //                .blur(radius: 20)
             //            Text("Song: Bristol")
             //            Text("Artist: Feng")
-            Text("Time: \(formatTime(time: currentTime)) / \(formatTime(time: duration))")
+            Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
         }
         .padding(3)
         HStack(spacing: 30){
             Button {
-                playSong()
+                audioManager.playPause()
                 print("User's guess: \(userGuess)")
             } label: {
-                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
             }
             Button(action: {
-                if let player = audioPlayer, player.isPlaying {
-                    player.currentTime = 0
-                    player.play()
-                    startTimer()
-                    autoStop()
-                }
+                audioManager.restart()
+//                if let player = audioPlayer, player.isPlaying {
+//                    player.currentTime = 0
+//                    player.play()
+//                    audioManager.startTimer()
+//                    audioManager.autoStop()
+//                }
             }){
                 Image(systemName: "arrow.clockwise.circle.fill")
                     .resizable()
                     .foregroundColor(.blue)
                     .frame(width: 35, height: 35)
-                    .opacity(isPlaying ? 1.0 : 0.4)
+                    .opacity(audioManager.isPlaying ? 1.0 : 0.4)
             }
-            .disabled(!isPlaying)
+     //       .disabled(!isPlaying)
         }
         
         TextField("Enter your song guess", text: $userGuess)
@@ -133,70 +134,81 @@ struct GuessView: View {
             showHintButton = true
         }
     }
-    func stopSong(){
-        audioPlayer?.stop()
-        isPlaying = false
-        audioPlayer?.currentTime = 0
-    }
-    func startSong(){
-        let soundName = "longTime"
-        guard let soundFile = NSDataAsset(name: soundName) else {
-            print("👺 \(soundName) is an invalid sound file")
-            return
-        }
-        do {
-            audioPlayer = try AVAudioPlayer(data: soundFile.data)
-            duration = audioPlayer?.duration ?? 0
-            audioPlayer?.play()
-            isPlaying = true
-            autoStop()
-            startTimer()
-        } catch {
-            print("Error: \(error.localizedDescription) from creating audio player")
-        }
-    }
-    
-    func autoStop() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-            DispatchQueue.main.async{
-                if let player = audioPlayer, player.isPlaying {
-                    stopSong()
-                }
-            }
-        }
-    }
-            func startTimer() {
-                var newTimer: Timer?
-                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                    DispatchQueue.main.async {
-                        if let player = audioPlayer {
-                            currentTime = player.currentTime
-                            if !player.isPlaying {
-                                timer?.invalidate()
-                            }
-                        }
-                    }
-                }
-                timer = newTimer
-            }
-            func playSong(){
-                if let player = audioPlayer {
-                    if player.isPlaying {
-                        player.pause()
-                        isPlaying = false
-       //                 timer?.invalidate()
-                    } else {
-                        player.play()
-                        isPlaying = true
-                        autoStop()
-                    }
-                } else {
-                    startSong()
-                    isPlaying = true
-                    //            autoStop()
-                }
-            }
+//    func stopSong(){
+//        audioPlayer?.stop()
+//        audioManager.isPlaying = false
+//        audioPlayer?.currentTime = 0
+//        audioManager.currentTime = 0
+//        timer?.invalidate()
+//    }
+//    func startSong(){
+//        let soundName = "longTime"
+//        guard let soundFile = NSDataAsset(name: soundName) else {
+//            print("👺 \(soundName) is an invalid sound file")
+//            return
+//        }
+//        do {
+//            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+//            duration = audioPlayer?.duration ?? 0
+//            audioPlayer?.play()
+//            audioManager.isPlaying = true
+//            autoStop()
+//            startTimer()
+//        } catch {
+//            print("Error: \(error.localizedDescription) from creating audio player")
+//        }
+//    }
+//    
+//    func autoStop() {
+//        timer?.invalidate()
+//        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+//            DispatchQueue.main.async{
+//                if let player = audioPlayer, player.isPlaying{
+//                    currentTime += 0.1
+//                    if currentTime >= 5 {
+//                        stopSong()
+//                    }
+//                }
+//            }
+//            DispatchQueue.main.async{
+//                if let player = audioPlayer, player.isPlaying {
+//                    stopSong()
+//                }
+//            }
+//        }
+//    }
+//    func playSong(){
+//        if let player = audioPlayer {
+//            if player.isPlaying {
+//                player.pause()
+//                audioManager.isPlaying = false
+////                 timer?.invalidate()
+//            } else {
+//                player.play()
+//                audioManager.isPlaying = true
+//                autoStop()
+//            }
+//        } else {
+//            startSong()
+//            audioManager.isPlaying = true
+//            //            autoStop()
+//        }
+//    }
+//            func startTimer() {
+//                var newTimer: Timer?
+//                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+//                    DispatchQueue.main.async {
+//                        if let player = audioPlayer {
+//                            currentTime = player.currentTime
+//                            if !player.isPlaying {
+//                                timer?.invalidate()
+//                            }
+//                        }
+//                    }
+//                }
+//                timer = newTimer
+//            }
+            
         }
         
         
