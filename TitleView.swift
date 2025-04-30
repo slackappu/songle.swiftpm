@@ -4,12 +4,13 @@ struct TitleView: View {
     @State var showInstructions = false
     var body: some View {
             VStack{
-                Text("Songle 🎵")
-                    .frame(width: 400)
+                Image("songle")
+               // Text("Songle 🎵")
+                    .frame(width: 200, height: 200)
                     .font(.system(size: 85, weight: .bold))
                     .foregroundStyle(
                         LinearGradient(
-                            gradient: Gradient(colors: [.pink, .yellow, .red]),
+                            gradient: Gradient(colors: [.orange, .yellow, .red]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -18,7 +19,7 @@ struct TitleView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 //              .shadow(color: .red, radius: 11, x: 0, y: 0)
-                    .shadow(color: .purple, radius: 22, x: 0, y: 0)
+                    .shadow(color: .red, radius: 22, x: 0, y: 0)
             }
             Divider()
         NavigationStack{
