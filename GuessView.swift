@@ -72,6 +72,7 @@ struct GuessView: View {
             .multilineTextAlignment(.center)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 300)
+            .disabled(isCorrect)
         Text("Make sure you have proper spelling!")
             .foregroundStyle(.gray)
             .padding(.bottom, 20)
@@ -83,6 +84,7 @@ struct GuessView: View {
         .background(Color.red)
         .foregroundStyle(.white)
         .cornerRadius(10)
+        .disabled(isCorrect)
         .alert(isPresented: $showAlert){
             Alert(
                 title: Text(isCorrect ? "Correct" : "Incorrect."),
