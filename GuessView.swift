@@ -4,14 +4,14 @@ import AVFoundation
 struct GuessView: View {
     @StateObject var audioManager = AudioManager()
     @State var userGuess: String = ""
-//    @State var audioPlayer: AVAudioPlayer?
-//    @State var currentTime: TimeInterval = 0
-//    @State var duration: TimeInterval = 0
-//    @State var timer: Timer?
+    //    @State var audioPlayer: AVAudioPlayer?
+    //    @State var currentTime: TimeInterval = 0
+    //    @State var duration: TimeInterval = 0
+    //    @State var timer: Timer?
     @State var userPreviousGuesses: [String] = []
     @State var showAlert = false
     @State var isCorrect = false
- //   @State var isPlaying = false
+    //   @State var isPlaying = false
     @State var Alerthi = false
     @State var revealSong = false
     @State var guessCount = 0
@@ -19,13 +19,13 @@ struct GuessView: View {
     var body: some View {
         VStack{
             Text("Guess the Song 🎶")
-                .font(.largeTitle)
+                .font(.custom("Futura", size: 34))
                 .fontWeight(.bold)
                 .padding(.bottom, 10)
             
             ForEach(userPreviousGuesses, id: \.self) { guess in
                 Text("• \(guess)")
-                    .font(.body)
+                    .font(.custom("Futura", size: 20))
                     .foregroundStyle(.gray)
             }
             VStack(spacing:15){
@@ -40,6 +40,7 @@ struct GuessView: View {
                 //            Text("Artist: Feng")
                 Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
             }
+            .font(.custom("Futura", size: 18))
         }
         .padding(3)
         HStack(spacing: 30){
@@ -53,12 +54,12 @@ struct GuessView: View {
             }
             Button(action: {
                 audioManager.restart()
-//                if let player = audioPlayer, player.isPlaying {
-//                    player.currentTime = 0
-//                    player.play()
-//                    audioManager.startTimer()
-//                    audioManager.autoStop()
-//                }
+                //                if let player = audioPlayer, player.isPlaying {
+                //                    player.currentTime = 0
+                //                    player.play()
+                //                    audioManager.startTimer()
+                //                    audioManager.autoStop()
+                //                }
             }){
                 Image(systemName: "arrow.clockwise.circle.fill")
                     .resizable()
@@ -66,21 +67,23 @@ struct GuessView: View {
                     .frame(width: 35, height: 35)
                     .opacity(audioManager.isPlaying ? 1.0 : 0.4)
             }
-     //       .disabled(!audioManager.isPlaying)
+            //       .disabled(!audioManager.isPlaying)
         }
         
         TextField("Enter your song guess", text: $userGuess)
+            .font(.custom("Futura", size: 18))
             .multilineTextAlignment(.center)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 300)
             .disabled(isCorrect)
         Text("Make sure you have proper spelling!")
+            .font(.custom("Futura", size: 16))
             .foregroundStyle(.gray)
             .padding(.bottom, 20)
         Button("Submit Guess"){
             checkTheGuess()
         }
-        .font(.title3)
+        .font(.custom("Futura", size: 24))
         .padding()
         .background(Color.red)
         .foregroundStyle(.white)
@@ -137,7 +140,7 @@ struct GuessView: View {
     
     func checkTheGuess(){
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
-            userPreviousGuesses.append(trimmedGuess)
+        userPreviousGuesses.append(trimmedGuess)
         
         let answer = "long time"
         isCorrect = trimmedGuess.lowercased() == answer
@@ -149,79 +152,79 @@ struct GuessView: View {
             showHintButton = true
         }
     }
-//    func stopSong(){
-//        audioPlayer?.stop()
-//        audioManager.isPlaying = false
-//        audioPlayer?.currentTime = 0
-//    }
-//    func startSong(){
-//        let soundName = "longTime"
-//        guard let soundFile = NSDataAsset(name: soundName) else {
-//            print("👺 \(soundName) is an invalid sound file")
-//            return
-//        }
-//        do {
-//            audioPlayer = try AVAudioPlayer(data: soundFile.data)
-//            duration = audioPlayer?.duration ?? 0
-//            audioPlayer?.play()
-//            audioManager.isPlaying = true
-//            autoStop()
-//            startTimer()
-//        } catch {
-//            print("Error: \(error.localizedDescription) from creating audio player")
-//        }
-//    }
+    //    func stopSong(){
+    //        audioPlayer?.stop()
+    //        audioManager.isPlaying = false
+    //        audioPlayer?.currentTime = 0
+    //    }
+    //    func startSong(){
+    //        let soundName = "longTime"
+    //        guard let soundFile = NSDataAsset(name: soundName) else {
+    //            print("👺 \(soundName) is an invalid sound file")
+    //            return
+    //        }
+    //        do {
+    //            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+    //            duration = audioPlayer?.duration ?? 0
+    //            audioPlayer?.play()
+    //            audioManager.isPlaying = true
+    //            autoStop()
+    //            startTimer()
+    //        } catch {
+    //            print("Error: \(error.localizedDescription) from creating audio player")
+    //        }
+    //    }
     
-//    func autoStop() {
-//        timer?.invalidate()
-//        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-//            DispatchQueue.main.async{
-//                if let player = audioPlayer, player.isPlaying {
-//                    stopSong()
-//                }
-//            }
-//        }
-//    }
-//        func startTimer() {
-//            var newTimer: Timer?
-//                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-//                    DispatchQueue.main.async {
-//                        if let player = audioPlayer {
-//                            currentTime = player.currentTime
-//                            if !player.isPlaying {
-//                                timer?.invalidate()
-//                            }
-//                        }
-//                    }
-//                }
-//        timer = newTimer
-//            }
-//    
-//            func playSong(){
-//                if let player = audioPlayer {
-//                    if player.isPlaying {
-//                        player.pause()
-//                        audioManager.isPlaying = false
-//       //                 timer?.invalidate()
-//                    } else {
-//                        player.play()
-//                        audioManager.isPlaying = true
-//                        autoStop()
-//                    }
-//                } else {
-//                    startSong()
-//                    audioManager.isPlaying = true
-//                    //            autoStop()
-//                }
-//            }
-      }
-        
-        
-        func formatTime(time: TimeInterval) -> String {
-            let minutes = Int(time) / 60
-            let seconds = Int(time) % 60
-            return String(format: "%d:%02d", minutes, seconds)
-        }
+    //    func autoStop() {
+    //        timer?.invalidate()
+    //        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+    //            DispatchQueue.main.async{
+    //                if let player = audioPlayer, player.isPlaying {
+    //                    stopSong()
+    //                }
+    //            }
+    //        }
+    //    }
+    //        func startTimer() {
+    //            var newTimer: Timer?
+    //                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+    //                    DispatchQueue.main.async {
+    //                        if let player = audioPlayer {
+    //                            currentTime = player.currentTime
+    //                            if !player.isPlaying {
+    //                                timer?.invalidate()
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //        timer = newTimer
+    //            }
+    //
+    //            func playSong(){
+    //                if let player = audioPlayer {
+    //                    if player.isPlaying {
+    //                        player.pause()
+    //                        audioManager.isPlaying = false
+    //       //                 timer?.invalidate()
+    //                    } else {
+    //                        player.play()
+    //                        audioManager.isPlaying = true
+    //                        autoStop()
+    //                    }
+    //                } else {
+    //                    startSong()
+    //                    audioManager.isPlaying = true
+    //                    //            autoStop()
+    //                }
+    //            }
+}
+
+
+func formatTime(time: TimeInterval) -> String {
+    let minutes = Int(time) / 60
+    let seconds = Int(time) % 60
+    return String(format: "%d:%02d", minutes, seconds)
+}
 
 
 #Preview {
