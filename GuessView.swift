@@ -104,7 +104,7 @@ struct GuessView: View {
                     .frame(width:150, height: 40)
                     .background(.orange)
                     .foregroundStyle(.white)
-                    .font(.title3)
+                    .font(.custom("Futura", size: 23))
                     .cornerRadius(10)
                     .shadow(color: .blue, radius: 5)
             }
@@ -218,8 +218,6 @@ struct GuessView: View {
     //                }
     //            }
 }
-
-
 func formatTime(time: TimeInterval) -> String {
     let minutes = Int(time) / 60
     let seconds = Int(time) % 60

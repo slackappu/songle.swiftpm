@@ -28,9 +28,9 @@ struct TitleView: View {
                     .font(.custom("Futura", size: 32))
                     .underline()
                 VStack(spacing: 10){
-                    Text("• A snippet of a song will play 👂            ")
+                    Text("• A snippet of a song will play 👂        ")
                     Text("• You have 6 tries to guess the song 🎶")
-                    Text("• Try to guess as fast as you can! 💨     ")
+                    Text("• Try to guess as fast as you can! 💨    ")
                 }
             }
             .frame(width:350, alignment: .leading)
