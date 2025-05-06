@@ -4,14 +4,9 @@ import AVFoundation
 struct GuessView: View {
     @StateObject var audioManager = AudioManager()
     @State var userGuess: String = ""
-    //    @State var audioPlayer: AVAudioPlayer?
-    //    @State var currentTime: TimeInterval = 0
-    //    @State var duration: TimeInterval = 0
-    //    @State var timer: Timer?
     @State var userPreviousGuesses: [String] = []
     @State var showAlert = false
     @State var isCorrect = false
-    //   @State var isPlaying = false
     @State var Alerthi = false
     @State var revealSong = false
     @State var guessCount = 0
@@ -58,12 +53,6 @@ struct GuessView: View {
                 }
                 Button(action: {
                     audioManager.restart()
-                    //                if let player = audioPlayer, player.isPlaying {
-                    //                    player.currentTime = 0
-                    //                    player.play()
-                    //                    audioManager.startTimer()
-                    //                    audioManager.autoStop()
-                    //                }
                 }){
                     Image(systemName: "arrow.clockwise.circle.fill")
                         .resizable()
@@ -71,7 +60,7 @@ struct GuessView: View {
                         .frame(width: 35, height: 35)
                         .opacity(audioManager.isPlaying ? 1.0 : 0.4)
                 }
-                //       .disabled(!audioManager.isPlaying)
+                    .disabled(!audioManager.isPlaying)
             }
             
             TextField("Enter your song guess", text: $userGuess)
@@ -90,53 +79,6 @@ struct GuessView: View {
                     .font(.custom("Futura", size: 20))
                     .foregroundStyle(.gray)
             }
-            VStack(spacing:15){
-                Text("Guesses left: \(max(0, 6 - guessCount))")
-                //            Text("Song: Girls Trip")
-                //            Text("Artist: YT")
-                //            Image("oi")
-                //                .resizable()
-                //                .frame(width: 300, height: 300)
-                //                .blur(radius: 20)
-                //            Text("Song: Bristol")
-                //            Text("Artist: Feng")
-                Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
-            }
-            .font(.custom("Futura", size: 18))
-        }
-    
-        HStack(spacing: 30){
-            Button {
-                audioManager.playPause()
-                print("User's guess: \(userGuess)")
-            } label: {
-                Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .resizable()
-                    .frame(width: 35, height: 35)
-            }
-            Button(action: {
-                audioManager.restart()
-                //                if let player = audioPlayer, player.isPlaying {
-                //                    player.currentTime = 0
-                //                    player.play()
-                //                    audioManager.startTimer()
-                //                    audioManager.autoStop()
-                //                }
-            }){
-                Image(systemName: "arrow.clockwise.circle.fill")
-                    .resizable()
-                    .foregroundColor(.blue)
-                    .frame(width: 35, height: 35)
-                    .opacity(audioManager.isPlaying ? 1.0 : 0.4)
-            }
-                   .disabled(!audioManager.isPlaying)
-        }
-        
-        TextField("Enter your song guess", text: $userGuess)
-            .font(.custom("Futura", size: 18))
-            .multilineTextAlignment(.center)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .frame(width: 300)
             Button("Submit Guess"){
                 if guessCount >= 6 {
                     maxGuesses = true
@@ -197,37 +139,38 @@ struct GuessView: View {
                 }
             }
         }
-        .background(backgroundColor)
-        .animation(.easeOut, value: backgroundColor)
-    }
-        func checkTheGuess(){
-            let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
-            userPreviousGuesses.append(trimmedGuess)
-            
-            let answer = "long time"
-            isCorrect = trimmedGuess.lowercased() == answer
-            showAlert = true
-            userGuess = ""
-            
-            guessCount += 1
-            if guessCount >= 2 {
-                showHintButton = true
-            }
-            if !isCorrect {
-                backgroundColor = .red
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    backgroundColor = .white
-                }
+            .background(backgroundColor)
+            .animation(.easeOut, value: backgroundColor)
+        }
+    func checkTheGuess(){
+        let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
+        userPreviousGuesses.append(trimmedGuess)
+        
+        let answer = "long time"
+        isCorrect = trimmedGuess.lowercased() == answer
+        showAlert = true
+        userGuess = ""
+        
+        guessCount += 1
+        if guessCount >= 2 {
+            showHintButton = true
+        }
+        if !isCorrect {
+            backgroundColor = .red
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                backgroundColor = .white
             }
         }
     }
-    func formatTime(time: TimeInterval) -> String {
-        let minutes = Int(time) / 60
-        let seconds = Int(time) % 60
-        return String(format: "%d:%02d", minutes, seconds)
-    }
-    
+}
 
+func formatTime(time: TimeInterval) -> String {
+    let minutes = Int(time) / 60
+    let seconds = Int(time) % 60
+    return String(format: "%d:%02d", minutes, seconds)
+}
+        
+    
     #Preview {
         GuessView()
     }
