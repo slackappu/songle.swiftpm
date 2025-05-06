@@ -66,11 +66,9 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
 
     func startTimer() {
         timer?.invalidate()
-
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] _ in
             guard let player = audioPlayer else { return }
             currentTime = player.currentTime
-
             if !player.isPlaying {
                 timer?.invalidate()
             }
@@ -81,31 +79,4 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         stopSong()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

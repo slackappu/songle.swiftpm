@@ -69,7 +69,7 @@ struct GuessView: View {
                     .frame(width: 35, height: 35)
                     .opacity(audioManager.isPlaying ? 1.0 : 0.4)
             }
-            //       .disabled(!audioManager.isPlaying)
+                   .disabled(!audioManager.isPlaying)
         }
         
         TextField("Enter your song guess", text: $userGuess)
@@ -156,71 +156,6 @@ struct GuessView: View {
                 showHintButton = true
             }
         }
-        //    func stopSong(){
-        //        audioPlayer?.stop()
-        //        audioManager.isPlaying = false
-        //        audioPlayer?.currentTime = 0
-        //    }
-        //    func startSong(){
-        //        let soundName = "longTime"
-        //        guard let soundFile = NSDataAsset(name: soundName) else {
-        //            print("👺 \(soundName) is an invalid sound file")
-        //            return
-        //        }
-        //        do {
-        //            audioPlayer = try AVAudioPlayer(data: soundFile.data)
-        //            duration = audioPlayer?.duration ?? 0
-        //            audioPlayer?.play()
-        //            audioManager.isPlaying = true
-        //            autoStop()
-        //            startTimer()
-        //        } catch {
-        //            print("Error: \(error.localizedDescription) from creating audio player")
-        //        }
-        //    }
-        
-        //    func autoStop() {
-        //        timer?.invalidate()
-        //        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-        //            DispatchQueue.main.async{
-        //                if let player = audioPlayer, player.isPlaying {
-        //                    stopSong()
-        //                }
-        //            }
-        //        }
-        //    }
-        //        func startTimer() {
-        //            var newTimer: Timer?
-        //                newTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-        //                    DispatchQueue.main.async {
-        //                        if let player = audioPlayer {
-        //                            currentTime = player.currentTime
-        //                            if !player.isPlaying {
-        //                                timer?.invalidate()
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //        timer = newTimer
-        //            }
-        //
-        //            func playSong(){
-        //                if let player = audioPlayer {
-        //                    if player.isPlaying {
-        //                        player.pause()
-        //                        audioManager.isPlaying = false
-        //       //                 timer?.invalidate()
-        //                    } else {
-        //                        player.play()
-        //                        audioManager.isPlaying = true
-        //                        autoStop()
-        //                    }
-        //                } else {
-        //                    startSong()
-        //                    audioManager.isPlaying = true
-        //                    //            autoStop()
-        //                }
-        //            }
     }
     func formatTime(time: TimeInterval) -> String {
         let minutes = Int(time) / 60
