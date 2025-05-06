@@ -17,12 +17,72 @@ struct GuessView: View {
     @State var guessCount = 0
     @State var showHintButton = false
     @State var maxGuesses = false
+    @State var backgroundColor: Color = .white
     var body: some View {
-        VStack{
-            Image("songle")
-            Text("Guess the Song 🎶")
-                .font(.custom("Futura", size: 34))
-                .fontWeight(.bold)
+        VStack {
+            VStack{
+                Image("songle")
+                Text("Guess the Song 🎶")
+                    .font(.custom("Futura", size: 34))
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                ForEach(userPreviousGuesses, id: \.self) { guess in
+                    Text("• \(guess)")
+                        .font(.custom("Futura", size: 20))
+                        .foregroundStyle(.gray)
+                }
+                VStack(spacing:15){
+                    Text("Guesses left: \(max(0, 6 - guessCount))")
+                    //            Text("Song: Girls Trip")
+                    //            Text("Artist: YT")
+                    //            Image("oi")
+                    //                .resizable()
+                    //                .frame(width: 300, height: 300)
+                    //                .blur(radius: 20)
+                    //            Text("Song: Bristol")
+                    //            Text("Artist: Feng")
+                    Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
+                }
+                .font(.custom("Futura", size: 18))
+            }
+            
+            HStack(spacing: 30){
+                Button {
+                    audioManager.playPause()
+                    print("User's guess: \(userGuess)")
+                } label: {
+                    Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                }
+                Button(action: {
+                    audioManager.restart()
+                    //                if let player = audioPlayer, player.isPlaying {
+                    //                    player.currentTime = 0
+                    //                    player.play()
+                    //                    audioManager.startTimer()
+                    //                    audioManager.autoStop()
+                    //                }
+                }){
+                    Image(systemName: "arrow.clockwise.circle.fill")
+                        .resizable()
+                        .foregroundColor(.blue)
+                        .frame(width: 35, height: 35)
+                        .opacity(audioManager.isPlaying ? 1.0 : 0.4)
+                }
+                //       .disabled(!audioManager.isPlaying)
+            }
+            
+            TextField("Enter your song guess", text: $userGuess)
+                .font(.custom("Futura", size: 18))
+                .multilineTextAlignment(.center)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 300)
+                .disabled(isCorrect)
+            Text("Make sure you have proper spelling!")
+                .font(.custom("Futura", size: 16))
+                .foregroundStyle(.gray)
                 .padding(.bottom, 10)
             
             ForEach(userPreviousGuesses, id: \.self) { guess in
@@ -77,31 +137,26 @@ struct GuessView: View {
             .multilineTextAlignment(.center)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 300)
-            .disabled(isCorrect)
-        Text("Make sure you have proper spelling!")
-            .font(.custom("Futura", size: 16))
-            .foregroundStyle(.gray)
-            .padding(.bottom, 10)
-        Button("Submit Guess"){
-            if guessCount >= 6 {
-                maxGuesses = true
-            } else {
-                checkTheGuess()
-            }
-        }
-                .font(.custom("Futura", size: 24))
-                .padding()
-                .background(Color.red)
-                .foregroundStyle(.white)
-                .cornerRadius(10)
-                .disabled(isCorrect)
-                .alert(isPresented: $showAlert){
-                    Alert(
-                        title: Text(isCorrect ? "Correct" : "Incorrect."),
-                        message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
-                        dismissButton: .default(Text("OK"))
-                    )
+            Button("Submit Guess"){
+                if guessCount >= 6 {
+                    maxGuesses = true
+                } else {
+                    checkTheGuess()
                 }
+            }
+            .font(.custom("Futura", size: 24))
+            .padding()
+            .background(Color.red)
+            .foregroundStyle(.white)
+            .cornerRadius(10)
+            .disabled(isCorrect)
+            .alert(isPresented: $showAlert){
+                Alert(
+                    title: Text(isCorrect ? "Correct" : "Incorrect."),
+                    message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
             if guessCount >= 2 {
                 Button(action: {
                     Alerthi = true
@@ -142,6 +197,9 @@ struct GuessView: View {
                 }
             }
         }
+        .background(backgroundColor)
+        .animation(.easeOut, value: backgroundColor)
+    }
         func checkTheGuess(){
             let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
             userPreviousGuesses.append(trimmedGuess)
@@ -154,6 +212,12 @@ struct GuessView: View {
             guessCount += 1
             if guessCount >= 2 {
                 showHintButton = true
+            }
+            if !isCorrect {
+                backgroundColor = .red
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    backgroundColor = .white
+                }
             }
         }
     }
