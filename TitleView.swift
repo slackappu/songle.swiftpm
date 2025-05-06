@@ -3,7 +3,8 @@ import SwiftUI
 struct TitleView: View {
     @State var showInstructions = false
     var body: some View {
-        VStack{
+        NavigationStack{
+            VStack{
             Image("songle")
             // Text("Songle 🎵")
                 .frame(width: 200, height: 170)
@@ -22,7 +23,6 @@ struct TitleView: View {
                 .shadow(color: .red, radius: 15, x: 0, y: 0)
         }
         Divider()
-        NavigationStack{
             VStack(spacing: 15){
                 Text("How to Play")
                     .font(.custom("Futura", size: 32))

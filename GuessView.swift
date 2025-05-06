@@ -19,6 +19,7 @@ struct GuessView: View {
     @State var maxGuesses = false
     var body: some View {
         VStack{
+            Image("songle")
             Text("Guess the Song 🎶")
                 .font(.custom("Futura", size: 34))
                 .fontWeight(.bold)
