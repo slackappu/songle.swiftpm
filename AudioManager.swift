@@ -7,6 +7,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isPlaying = false
     @Published var audioPlayer: AVAudioPlayer?
     @Published var timer: Timer?
+    @Published var savedTime: TimeInterval = 0
 
     func startSong() {
         let soundName = "longTime"
@@ -56,6 +57,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         currentTime = 0
         isPlaying = false
         timer?.invalidate()
+        savedTime = 0
     }
 
     func startTimer() {
