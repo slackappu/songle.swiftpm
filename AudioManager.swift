@@ -43,6 +43,10 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
     
     func restart() {
+        if audioPlayer == nil {
+            startSong()
+            return
+        }
         guard let player = audioPlayer else { return }
 
         player.currentTime = 0
@@ -77,3 +81,31 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         stopSong()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
