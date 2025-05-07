@@ -73,12 +73,7 @@ struct GuessView: View {
                 .font(.custom("Futura", size: 16))
                 .foregroundStyle(.gray)
                 .padding(.bottom, 10)
-            
-            ForEach(userPreviousGuesses, id: \.self) { guess in
-                Text("• \(guess)")
-                    .font(.custom("Futura", size: 20))
-                    .foregroundStyle(.gray)
-            }
+        
             Button("Submit Guess"){
                 if guessCount >= 6 {
                     maxGuesses = true
@@ -155,7 +150,12 @@ struct GuessView: View {
         if guessCount >= 2 {
             showHintButton = true
         }
-        if !isCorrect {
+        if isCorrect {
+            backgroundColor = .green
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                backgroundColor = .white
+            }
+        } else {
             backgroundColor = .red
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 backgroundColor = .white
@@ -174,4 +174,4 @@ func formatTime(time: TimeInterval) -> String {
     #Preview {
         GuessView()
     }
-
+    
