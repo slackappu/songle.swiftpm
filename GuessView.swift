@@ -17,10 +17,11 @@ struct GuessView: View {
         VStack {
             VStack{
                 Image("songle")
+                    .resizable()
+                    .frame(width: 200, height: 200)
                 Text("Guess the Song 🎶")
-                    .font(.custom("Futura", size: 34))
+                    .font(.custom("Futura", size: 30))
                     .fontWeight(.bold)
-                    .padding(.bottom, 10)
                 
                 ForEach(userPreviousGuesses, id: \.self) { guess in
                     Text("• \(guess)")
@@ -40,6 +41,7 @@ struct GuessView: View {
                     Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
                 }
                 .font(.custom("Futura", size: 18))
+                .padding()
             }
             
             HStack(spacing: 30){
@@ -81,7 +83,7 @@ struct GuessView: View {
                     checkTheGuess()
                 }
             }
-            .font(.custom("Futura", size: 24))
+            .font(.custom("Futura", size: 22))
             .padding()
             .background(Color.red)
             .foregroundStyle(.white)
@@ -122,8 +124,7 @@ struct GuessView: View {
                     revealSong = true
                 }) {
                     Text("Reveal Song!")
-                        .font(.title3)
-                        .foregroundStyle(.white)
+                        .font(.custom("Futura", size: 17))
                         .padding()
                         .background(.green)
                         .cornerRadius(10)
