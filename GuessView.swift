@@ -25,7 +25,7 @@ struct GuessView: View {
                     Text("Guess the Song 🎶")
                         .font(.custom("Futura", size: 30))
                         .fontWeight(.bold)
-
+                    
                     ForEach(userPreviousGuesses, id: \.self) { guess in
                         Text("• \(guess)")
                             .font(.custom("Futura", size: 20))
@@ -38,7 +38,7 @@ struct GuessView: View {
                     .font(.custom("Futura", size: 18))
                     .padding()
                 }
-
+                
                 HStack(spacing: 30){
                     Button {
                         audioManager.playPause()
@@ -57,9 +57,9 @@ struct GuessView: View {
                             .frame(width: 35, height: 35)
                             .opacity(audioManager.isPlaying ? 1.0 : 0.4)
                     }
-                        .disabled(!audioManager.isPlaying)
+                    .disabled(!audioManager.isPlaying)
                 }
-
+                
                 TextField("Enter your song guess", text: $userGuess)
                     .font(.custom("Futura", size: 18))
                     .multilineTextAlignment(.center)
@@ -70,7 +70,7 @@ struct GuessView: View {
                     .font(.custom("Futura", size: 16))
                     .foregroundStyle(.gray)
                     .padding(.bottom, 10)
-
+                
                 Button("Submit Guess"){
                     if guessCount >= 6 {
                         maxGuesses = true
@@ -129,7 +129,7 @@ struct GuessView: View {
                         Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
                     }
                 }
-
+                
                 if isCorrect {
                     NavigationLink(destination: TitleView(), isActive: $navigateBack) {
                         Button("Go Back to Title View") {
@@ -180,9 +180,9 @@ func formatTime(time: TimeInterval) -> String {
     let seconds = Int(time) % 60
     return String(format: "%d:%02d", minutes, seconds)
 }
-        
-    
-    #Preview {
-        GuessView()
-    }
-    
+
+
+#Preview {
+    GuessView()
+}
+
