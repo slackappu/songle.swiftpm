@@ -12,8 +12,11 @@ struct GuessView: View {
     @State var guessCount = 0
     @State var showHintButton = false
     @State var maxGuesses = false
+    @State var backgroundColor: Color = .white
+    @State var navigateBack = false
     
     var body: some View {
+        NavigationView {
         ZStack{
             audioManager.backgroundColor
                 .ignoresSafeArea()
@@ -138,10 +141,24 @@ struct GuessView: View {
                         Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
                     }
                 }
+                
+                if isCorrect {
+                    NavigationLink(destination: TitleView(), isActive: $navigateBack) {
+                        Button("Go Back to Title View") {
+                            navigateBack = true
+                        }
+                        .font(.custom("Futura", size: 22))
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                    }
+                }
             }
             .animation(.easeInOut, value: audioManager.backgroundColor)
         }
     }
+    
     func checkTheGuess(){
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
@@ -174,9 +191,9 @@ func formatTime(time: TimeInterval) -> String {
     let seconds = Int(time) % 60
     return String(format: "%d:%02d", minutes, seconds)
 }
-        
-    
-    #Preview {
-        GuessView()
-    }
-    
+
+
+#Preview {
+    GuessView()
+}
+
