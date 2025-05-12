@@ -16,7 +16,7 @@ struct GuessView: View {
     @State var navigateBack = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 VStack{
                     Image("songle")
