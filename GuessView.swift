@@ -14,6 +14,7 @@ struct GuessView: View {
     @State var maxGuesses = false
     @State var backgroundColor: Color = .white
     @State var navigateBack = false
+    let correctAnswer = "long time"
     
     var body: some View {
         NavigationStack {
@@ -31,10 +32,14 @@ struct GuessView: View {
                             .fontWeight(.bold)
                         
                         ForEach(userPreviousGuesses, id: \.self) { guess in
-                            Text("• \(guess)")
-                                .font(.custom("Futura", size: 18))
-                                .foregroundStyle(.gray)
+                            HStack(alignment: .top) {
+                                Text("•")
+                                Text(guess)
+                                    .foregroundStyle(guess.lowercased() == correctAnswer ? .green : .gray)
+                            }
                         }
+                        .font(.custom("Futura", size: 16))
+                        .foregroundStyle(.gray)
                         VStack(spacing:15){
                             Text("Guesses left: \(max(0, 6 - guessCount))")
                             //            Text("Song: Girls Trip")
@@ -48,7 +53,7 @@ struct GuessView: View {
                             Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
                         }
                         .font(.custom("Futura", size: 18))
-                        .padding(.top, 5)
+                        
                     }
                     
                     HStack(spacing: 30){
@@ -79,12 +84,12 @@ struct GuessView: View {
                         .frame(width: 300)
                         .disabled(isCorrect)
                         .onSubmit {
-                                if guessCount >= 6 {
-                                    maxGuesses = true
-                                } else {
-                                    checkTheGuess()
-                                }
+                            if guessCount >= 6 {
+                                maxGuesses = true
+                            } else {
+                                checkTheGuess()
                             }
+                        }
                     Text("Make sure you have proper spelling!")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
