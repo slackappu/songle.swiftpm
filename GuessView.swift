@@ -40,6 +40,7 @@ struct GuessView: View {
                         }
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
+                        .bold()
                         VStack(spacing:15){
                             Text("Guesses left: \(max(0, 6 - guessCount))")
                             //            Text("Song: Girls Trip")
