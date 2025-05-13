@@ -32,7 +32,7 @@ struct GuessView: View {
                         
                         ForEach(userPreviousGuesses, id: \.self) { guess in
                             Text("• \(guess)")
-                                .font(.custom("Futura", size: 20))
+                                .font(.custom("Futura", size: 18))
                                 .foregroundStyle(.gray)
                         }
                         VStack(spacing:15){
@@ -48,7 +48,7 @@ struct GuessView: View {
                             Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
                         }
                         .font(.custom("Futura", size: 18))
-                        .padding()
+                        .padding(.top, 5)
                     }
                     
                     HStack(spacing: 30){
@@ -78,6 +78,13 @@ struct GuessView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 300)
                         .disabled(isCorrect)
+                        .onSubmit {
+                                if guessCount >= 6 {
+                                    maxGuesses = true
+                                } else {
+                                    checkTheGuess()
+                                }
+                            }
                     Text("Make sure you have proper spelling!")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
