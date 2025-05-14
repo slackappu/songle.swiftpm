@@ -18,12 +18,12 @@ struct GuessView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack{
+            ZStack {
                 audioManager.backgroundColor
                     .ignoresSafeArea()
                     .animation(.easeInOut, value: audioManager.backgroundColor)
                 VStack {
-                    VStack{
+                    VStack {
                         Image("songle")
                             .resizable()
                             .frame(width: 200, height: 200)
@@ -57,7 +57,7 @@ struct GuessView: View {
                         
                     }
                     
-                    HStack(spacing: 30){
+                    HStack(spacing: 30) {
                         Button {
                             audioManager.playPause()
                             print("User's guess: \(userGuess)")
@@ -96,7 +96,7 @@ struct GuessView: View {
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
                     
-                    Button("Submit Guess"){
+                    Button("Submit Guess") {
                         if guessCount >= 6 {
                             maxGuesses = true
                         } else {
@@ -173,7 +173,7 @@ struct GuessView: View {
         }
     }
     
-    func checkTheGuess(){
+    func checkTheGuess() {
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
         
