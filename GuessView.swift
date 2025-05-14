@@ -121,6 +121,7 @@ struct GuessView: View {
                                 message: Text("""
                               Made By Playboi Carti.
                               Carti's first number-one song on the Billboard Hot 100.
+                              The title track in album Die Lit.
                               """),
                                 dismissButton: .default(Text("Nice!"))
                             )

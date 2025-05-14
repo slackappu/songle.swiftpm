@@ -11,10 +11,10 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var autoStopTimer: Timer?
     @Published var savedTime: TimeInterval = 0
     @Published var backgroundColor: Color = .white
+    @Published var soundName = ""
     
-
     func startSong() {
-        let soundName = "longTime"
+        soundName = "longTime"
         guard let soundFile = NSDataAsset(name: soundName) else {
             print("👺 \(soundName) is an invalid sound file")
             return
