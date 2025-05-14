@@ -4,8 +4,8 @@ struct TitleView: View {
     @State var showInstructions = false
     @StateObject var audioManager = AudioManager()
     var body: some View {
-        NavigationStack{
-                VStack{
+        NavigationStack {
+                VStack {
                     Image("songle")
                     // Text("Songle 🎵")
                         .frame(width: 200, height: 170)
@@ -24,7 +24,7 @@ struct TitleView: View {
                         .shadow(color: .red, radius: 15, x: 0, y: 0)
                 }
                 Divider()
-                VStack(spacing: 15){
+                VStack(spacing: 15) {
                     Text("How to Play")
                         .font(.custom("Futura", size: 32))
                         .underline()

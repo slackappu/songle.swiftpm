@@ -14,15 +14,16 @@ struct GuessView: View {
     @State var maxGuesses = false
     @State var backgroundColor: Color = .white
     @State var navigateBack = false
+    let correctAnswer = "long time"
     
     var body: some View {
         NavigationStack {
-            ZStack{
+            ZStack {
                 audioManager.backgroundColor
                     .ignoresSafeArea()
                     .animation(.easeInOut, value: audioManager.backgroundColor)
                 VStack {
-                    VStack{
+                    VStack {
                         Image("songle")
                             .resizable()
                             .frame(width: 200, height: 200)
@@ -31,10 +32,15 @@ struct GuessView: View {
                             .fontWeight(.bold)
                         
                         ForEach(userPreviousGuesses, id: \.self) { guess in
-                            Text("• \(guess)")
-                                .font(.custom("Futura", size: 20))
-                                .foregroundStyle(.gray)
+                            HStack(alignment: .top) {
+                                Text("•")
+                                Text(guess)
+                                    .foregroundStyle(guess.lowercased() == correctAnswer ? .green : .gray)
+                            }
                         }
+                        .font(.custom("Futura", size: 16))
+                        .foregroundStyle(.gray)
+                        .bold()
                         VStack(spacing:15){
                             Text("Guesses left: \(max(0, 6 - guessCount))")
                             //            Text("Song: Girls Trip")
@@ -48,10 +54,10 @@ struct GuessView: View {
                             Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
                         }
                         .font(.custom("Futura", size: 18))
-                        .padding()
+                        
                     }
                     
-                    HStack(spacing: 30){
+                    HStack(spacing: 30) {
                         Button {
                             audioManager.playPause()
                             print("User's guess: \(userGuess)")
@@ -78,19 +84,26 @@ struct GuessView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 300)
                         .disabled(isCorrect)
+                        .onSubmit {
+                            if guessCount >= 6 {
+                                maxGuesses = true
+                            } else {
+                                checkTheGuess()
+                            }
+                        }
                     Text("Make sure you have proper spelling!")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
                     
-                    Button("Submit Guess"){
+                    Button("Submit Guess") {
                         if guessCount >= 6 {
                             maxGuesses = true
                         } else {
                             checkTheGuess()
                         }
                     }
-                    .font(.custom("Futura", size: 22))
+                    .font(.custom("Futura", size: 15))
                     .padding()
                     .background(Color.red)
                     .foregroundStyle(.white)
@@ -108,12 +121,12 @@ struct GuessView: View {
                             Alerthi = true
                         }) {
                             Text("Tap For Hints")
-                                .frame(width:150, height: 40)
+                                .frame(width: 120, height: 30)
                                 .background(.orange)
                                 .foregroundStyle(.white)
-                                .font(.custom("Futura", size: 23))
+                                .font(.custom("Futura", size: 15))
                                 .cornerRadius(10)
-                                .shadow(color: .blue, radius: 5)
+                                .shadow(color: .red, radius: 5)
                         }
                         .alert(isPresented: $Alerthi) {
                             Alert(
@@ -132,11 +145,11 @@ struct GuessView: View {
                             revealSong = true
                         }) {
                             Text("Reveal Song!")
-                                .font(.custom("Futura", size: 17))
+                                .font(.custom("Futura", size: 15))
                                 .padding()
-                                .background(.green)
+                                .background(.blue)
                                 .cornerRadius(10)
-                                .shadow(color: .blue, radius: 5)
+                                .shadow(color: .purple, radius: 5)
                         }
                         .alert(isPresented: $revealSong) {
                             Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
@@ -148,11 +161,11 @@ struct GuessView: View {
                             Button("Go Back to Title View") {
                                 navigateBack = true
                             }
-                            .font(.custom("Futura", size: 22))
+                            .font(.custom("Futura", size: 15))
                             .padding()
-                            .background(Color.blue)
-                            .foregroundStyle(.white)
+                            .background(.blue)
                             .cornerRadius(10)
+                            .shadow(color: .purple, radius: 5)
                         }
                     }
                 }
@@ -161,7 +174,7 @@ struct GuessView: View {
         }
     }
     
-    func checkTheGuess(){
+    func checkTheGuess() {
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
         
