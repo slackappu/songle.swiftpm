@@ -91,7 +91,7 @@ struct GuessView: View {
                                 checkTheGuess()
                             }
                         }
-                    Text("Make sure you have proper spelling!")
+                    Text("Make sure you have proper spelling and spacing!")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
@@ -140,7 +140,7 @@ struct GuessView: View {
                             )
                         }
                     }
-                    if guessCount >= 6 {
+                    if guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer }) {
                         Button(action: {
                             revealSong = true
                         }) {
@@ -156,7 +156,7 @@ struct GuessView: View {
                         }
                     }
                     
-                    if isCorrect {
+                    if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer })){
                         NavigationLink(destination: TitleView(), isActive: $navigateBack) {
                             Button("Go Back to Title View") {
                                 navigateBack = true
