@@ -133,22 +133,6 @@ struct GuessView: View {
                         }
                     }
                     
-                    if guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer }) {
-                        Button(action: {
-                            revealSong = true
-                        }) {
-                            Text("Reveal Song!")
-                                .font(.custom("Futura", size: 15))
-                                .padding()
-                                .background(.blue)
-                                .cornerRadius(10)
-                                .shadow(color: .purple, radius: 5)
-                        }
-                        .alert(isPresented: $revealSong) {
-                            Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
-                        }
-                    }
-                    
                     if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer })){
                         NavigationLink(destination: TitleView(), isActive: $navigateBack) {
                             Button("Go Back to Title View") {
