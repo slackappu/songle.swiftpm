@@ -43,14 +43,6 @@ struct GuessView: View {
                         .bold()
                         VStack(spacing:15){
                             Text("Guesses left: \(max(0, 6 - guessCount))")
-                            //            Text("Song: Girls Trip")
-                            //            Text("Artist: YT")
-                            //            Image("oi")
-                            //                .resizable()
-                            //                .frame(width: 300, height: 300)
-                            //                .blur(radius: 20)
-                            //            Text("Song: Bristol")
-                            //            Text("Artist: Feng")
                             Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
                         }
                         .font(.custom("Futura", size: 18))
@@ -96,17 +88,19 @@ struct GuessView: View {
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
                     
-                    Button("Submit Guess") {
+                    Button(action: {
                         if guessCount >= 6 {
                             maxGuesses = true
                         } else {
                             checkTheGuess()
                         }
+                    }) {
+                        Image(systemName: "paperplane.circle.fill")
+                            .resizable()
+                            .foregroundColor(.green)
+                            .frame(width: 35, height: 35)
                     }
-                    .font(.custom("Futura", size: 15))
                     .padding()
-                    .background(Color.red)
-                    .foregroundStyle(.white)
                     .cornerRadius(10)
                     .disabled(isCorrect)
                     .alert(isPresented: $showAlert){
@@ -116,17 +110,15 @@ struct GuessView: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
+                    
                     if guessCount >= 2 {
                         Button(action: {
                             Alerthi = true
                         }) {
-                            Text("Tap For Hints")
-                                .frame(width: 120, height: 30)
-                                .background(.orange)
-                                .foregroundStyle(.white)
-                                .font(.custom("Futura", size: 15))
-                                .cornerRadius(10)
-                                .shadow(color: .red, radius: 5)
+                            Image(systemName: "questionmark.circle.fill")
+                                .resizable()
+                                .foregroundColor(.yellow)
+                                .frame(width: 35, height: 35)
                         }
                         .alert(isPresented: $Alerthi) {
                             Alert(
@@ -140,6 +132,7 @@ struct GuessView: View {
                             )
                         }
                     }
+                    
                     if guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer }) {
                         Button(action: {
                             revealSong = true
