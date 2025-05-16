@@ -162,8 +162,11 @@ struct GuessView: View {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.white)
                 .animation(.easeInOut, value: audioManager.backgroundColor)
             }
+           
         }
     }
     
