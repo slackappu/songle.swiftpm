@@ -60,7 +60,7 @@ struct GuessView: View {
                         }
                         Button(action: {
                             audioManager.restart()
-                        }){
+                        }) {
                             Image(systemName: "arrow.clockwise.circle.fill")
                                 .resizable()
                                 .foregroundColor(.blue)
@@ -68,7 +68,29 @@ struct GuessView: View {
                                 .opacity(audioManager.isPlaying ? 1.0 : 0.4)
                         }
                         .disabled(!audioManager.isPlaying)
+
+                        Button(action: {
+                            if guessCount >= 6 {
+                                maxGuesses = true
+                            } else {
+                                checkTheGuess()
+                            }
+                        }) {
+                            Image(systemName: "paperplane.circle.fill")
+                                .resizable()
+                                .foregroundColor(.green)
+                                .frame(width: 35, height: 35)
+                        }
+                        .disabled(isCorrect)
                     }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text(isCorrect ? "Correct" : "Incorrect."),
+                            message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+
                     
                     TextField("Enter your song guess", text: $userGuess)
                         .font(.custom("Futura", size: 18))
@@ -87,29 +109,6 @@ struct GuessView: View {
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
-                    
-                    Button(action: {
-                        if guessCount >= 6 {
-                            maxGuesses = true
-                        } else {
-                            checkTheGuess()
-                        }
-                    }) {
-                        Image(systemName: "paperplane.circle.fill")
-                            .resizable()
-                            .foregroundColor(.green)
-                            .frame(width: 35, height: 35)
-                    }
-                    .padding()
-                    .cornerRadius(10)
-                    .disabled(isCorrect)
-                    .alert(isPresented: $showAlert){
-                        Alert(
-                            title: Text(isCorrect ? "Correct" : "Incorrect."),
-                            message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
                     
                     if guessCount >= 2 {
                         Button(action: {
@@ -150,10 +149,8 @@ struct GuessView: View {
                 .background(.white)
                 .animation(.easeInOut, value: audioManager.backgroundColor)
             }
-           
         }
     }
-    
     func checkTheGuess() {
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
