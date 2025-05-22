@@ -51,7 +51,16 @@ struct GuessView: View {
                     
                     HStack(spacing: 30) {
                         Button {
-                            audioManager.playPause()
+                            //                            if !isCorrect {
+                            //                                audioManager.playPause()
+                            //                            } else {
+                            //                                audioManager.startSong()
+                            //                            }
+                            if guessCount >= 6 {
+                                audioManager.startSong()
+                            } else {
+                                audioManager.playPause()
+                                }
                             print("User's guess: \(userGuess)")
                         } label: {
                             Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
