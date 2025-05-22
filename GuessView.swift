@@ -13,138 +13,145 @@ struct GuessView: View {
     @State var showHintButton = false
     @State var maxGuesses = false
     @State var backgroundColor: Color = .white
+    @State var navigateBack = false
+    let correctAnswer = "long time"
+    
     var body: some View {
-        VStack {
-            VStack{
-                Image("songle")
-                    .resizable()
-                    .frame(width: 200, height: 200)
-                Text("Guess the Song 🎶")
-                    .font(.custom("Futura", size: 30))
-                    .fontWeight(.bold)
-                
-                ForEach(userPreviousGuesses, id: \.self) { guess in
-                    Text("• \(guess)")
-                        .font(.custom("Futura", size: 20))
+        NavigationStack {
+            ZStack {
+                audioManager.backgroundColor
+                    .ignoresSafeArea()
+                    .animation(.easeInOut, value: audioManager.backgroundColor)
+                VStack {
+                    VStack {
+                        Image("songle")
+                            .resizable()
+                            .frame(width: 200, height: 200)
+                        Text("Guess the Song 🎶")
+                            .font(.custom("Futura", size: 30))
+                            .fontWeight(.bold)
+                        
+                        ForEach(userPreviousGuesses, id: \.self) { guess in
+                            HStack(alignment: .top) {
+                                Text("•")
+                                Text(guess)
+                                    .foregroundStyle(guess.lowercased() == correctAnswer ? .green : .gray)
+                            }
+                        }
+                        .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
-                }
-                VStack(spacing:15){
-                    Text("Guesses left: \(max(0, 6 - guessCount))")
-                    //            Text("Song: Girls Trip")
-                    //            Text("Artist: YT")
-                    //            Image("oi")
-                    //                .resizable()
-                    //                .frame(width: 300, height: 300)
-                    //                .blur(radius: 20)
-                    //            Text("Song: Bristol")
-                    //            Text("Artist: Feng")
-                    Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
-                }
-                .font(.custom("Futura", size: 18))
-                .padding()
-            }
-            
-            HStack(spacing: 30){
-                Button {
-                    audioManager.playPause()
-                    print("User's guess: \(userGuess)")
-                } label: {
-                    Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .resizable()
-                        .frame(width: 35, height: 35)
-                }
-                Button(action: {
-                    audioManager.restart()
-                }){
-                    Image(systemName: "arrow.clockwise.circle.fill")
-                        .resizable()
-                        .foregroundColor(.blue)
-                        .frame(width: 35, height: 35)
-                        .opacity(audioManager.isPlaying ? 1.0 : 0.4)
-                }
-                    .disabled(!audioManager.isPlaying)
-            }
-            
-            TextField("Enter your song guess", text: $userGuess)
-                .font(.custom("Futura", size: 18))
-                .multilineTextAlignment(.center)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .disabled(isCorrect)
-            Text("Make sure you have proper spelling!")
-                .font(.custom("Futura", size: 16))
-                .foregroundStyle(.gray)
-                .padding(.bottom, 10)
-        
-            Button("Submit Guess"){
-                if guessCount >= 6 {
-                    maxGuesses = true
-                } else {
-                    checkTheGuess()
-                }
-            }
-            .font(.custom("Futura", size: 22))
-            .padding()
-            .background(Color.red)
-            .foregroundStyle(.white)
-            .cornerRadius(10)
-            .disabled(isCorrect)
-            .alert(isPresented: $showAlert){
-                Alert(
-                    title: Text(isCorrect ? "Correct" : "Incorrect."),
-                    message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-            if guessCount >= 2 {
-                Button(action: {
-                    Alerthi = true
-                }) {
-                    Text("Tap For Hints")
-                        .frame(width:150, height: 40)
-                        .background(.orange)
-                        .foregroundStyle(.white)
-                        .font(.custom("Futura", size: 23))
-                        .cornerRadius(10)
-                        .shadow(color: .blue, radius: 5)
-                }
-                .alert(isPresented: $Alerthi) {
-                    Alert(
-                        title: Text("🎶 Fun Fact!"),
-                        message: Text("""
+                        .bold()
+                        VStack(spacing:15){
+                            Text("Guesses left: \(max(0, 6 - guessCount))")
+                            Text("Time: \(formatTime(time: audioManager.currentTime)) / \(formatTime(time: audioManager.duration))")
+                        }
+                        .font(.custom("Futura", size: 18))
+                        
+                    }
+                    
+                    HStack(spacing: 30) {
+                        Button {
+                            audioManager.playPause()
+                            print("User's guess: \(userGuess)")
+                        } label: {
+                            Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                                .resizable()
+                                .frame(width: 35, height: 35)
+                        }
+                        Button(action: {
+                            audioManager.restart()
+                        }) {
+                            Image(systemName: "arrow.clockwise.circle.fill")
+                                .resizable()
+                                .foregroundColor(.blue)
+                                .frame(width: 35, height: 35)
+                                .opacity(audioManager.isPlaying ? 1.0 : 0.4)
+                        }
+                        .disabled(!audioManager.isPlaying)
+
+                        Button(action: {
+                            if guessCount >= 6 {
+                                maxGuesses = true
+                            } else {
+                                checkTheGuess()
+                            }
+                        }) {
+                            Image(systemName: "paperplane.circle.fill")
+                                .resizable()
+                                .foregroundColor(.green)
+                                .frame(width: 35, height: 35)
+                        }
+                        .disabled(isCorrect)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text(isCorrect ? "Correct" : "Incorrect."),
+                            message: Text(isCorrect ? "Congratulations!" : "Try Again. You can do this!"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+
+                    
+                    TextField("Enter your song guess", text: $userGuess)
+                        .font(.custom("Futura", size: 18))
+                        .multilineTextAlignment(.center)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
+                        .disabled(isCorrect)
+                        .onSubmit {
+                            if guessCount >= 6 {
+                                maxGuesses = true
+                            } else {
+                                checkTheGuess()
+                            }
+                        }
+                    Text("Make sure you have proper spelling and spacing!")
+                        .font(.custom("Futura", size: 16))
+                        .foregroundStyle(.gray)
+                        .padding(.bottom, 10)
+                    
+                    if guessCount >= 2 {
+                        Button(action: {
+                            Alerthi = true
+                        }) {
+                            Image(systemName: "questionmark.circle.fill")
+                                .resizable()
+                                .foregroundColor(.yellow)
+                                .frame(width: 35, height: 35)
+                        }
+                        .alert(isPresented: $Alerthi) {
+                            Alert(
+                                title: Text("🎶 Fun Fact!"),
+                                message: Text("""
                               Made By Playboi Carti.
                               Carti's first number-one song on the Billboard Hot 100.
+                              The title track in album Die Lit.
                               """),
-                        dismissButton: .default(Text("Nice!"))
-                    )
+                                dismissButton: .default(Text("Nice!"))
+                            )
+                        }
+                    }
+                    
+                    if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer })){
+                        NavigationLink(destination: TitleView(), isActive: $navigateBack) {
+                            Button("Go Back to Title View") {
+                                navigateBack = true
+                            }
+                            .font(.custom("Futura", size: 15))
+                            .padding()
+                            .background(.blue)
+                            .cornerRadius(10)
+                            .shadow(color: .purple, radius: 5)
+                        }
+                    }
                 }
-            }
-            if guessCount >= 6 {
-                Button(action: {
-                    revealSong = true
-                }) {
-                    Text("Reveal Song!")
-                        .font(.custom("Futura", size: 17))
-                        .padding()
-                        .background(.green)
-                        .cornerRadius(10)
-                        .shadow(color: .blue, radius: 5)
-                }
-                .alert(isPresented: $revealSong) {
-                    Alert(title: Text("Song Details"), message: Text("• Song: Long Time \n • Artist: Playboi Carti \n • Year Released: 2018"), dismissButton: .default(Text("Nice Try!")))
-                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.white)
+                .animation(.easeInOut, value: audioManager.backgroundColor)
             }
         }
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.white, Color(.systemGray5)]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
-            .animation(.easeOut, value: backgroundColor)
-        }
-    func checkTheGuess(){
+    }
+    func checkTheGuess() {
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
         
@@ -158,14 +165,14 @@ struct GuessView: View {
             showHintButton = true
         }
         if isCorrect {
-            backgroundColor = .green
+            audioManager.backgroundColor = .green
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                backgroundColor = .white
+                audioManager.backgroundColor = .white
             }
         } else {
-            backgroundColor = .red
+            audioManager.backgroundColor = .red
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                backgroundColor = .white
+                audioManager.backgroundColor = .white
             }
         }
     }
@@ -176,9 +183,9 @@ func formatTime(time: TimeInterval) -> String {
     let seconds = Int(time) % 60
     return String(format: "%d:%02d", minutes, seconds)
 }
-        
-    
-    #Preview {
-        GuessView()
-    }
-    
+
+
+#Preview {
+    GuessView()
+}
+

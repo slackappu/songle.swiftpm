@@ -17,9 +17,10 @@ let package = Package(
             name: "songle",
             targets: ["AppModule"],
             bundleIdentifier: "org.jhhs.627490.songle",
+            teamIdentifier: "M4GGX9C28J",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .leaf),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.yellow),
             supportedDeviceFamilies: [
                 .pad,

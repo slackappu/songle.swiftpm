@@ -7,10 +7,14 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isPlaying = false
     @Published var audioPlayer: AVAudioPlayer?
     @Published var timer: Timer?
+    @Published var autoStopTimerStarted = false
+    @Published var autoStopTimer: Timer?
     @Published var savedTime: TimeInterval = 0
-
+    @Published var backgroundColor: Color = .white
+    @Published var soundName = ""
+    
     func startSong() {
-        let soundName = "longTime"
+        soundName = "longTime"
         guard let soundFile = NSDataAsset(name: soundName) else {
             print("👺 \(soundName) is an invalid sound file")
             return
@@ -22,6 +26,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.play()
             isPlaying = true
             startTimer()
+            autoStop()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
@@ -39,6 +44,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         } else {
             player.play()
             isPlaying = true
+            autoStop()
         }
     }
     
@@ -48,11 +54,11 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             return
         }
         guard let player = audioPlayer else { return }
-
         player.currentTime = 0
         player.play()
         isPlaying = true
         startTimer()
+        autoStop()
     }
 
     func stopSong() {
@@ -61,8 +67,11 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         currentTime = 0
         isPlaying = false
         timer?.invalidate()
+        autoStopTimer?.invalidate()
+        autoStopTimer = nil
         savedTime = 0
     }
+
 
     func startTimer() {
         timer?.invalidate()
@@ -74,6 +83,13 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             }
         }
     }
+    
+    func autoStop() {
+        autoStopTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] _ in
+            self.stopSong()
+        }
+    }
+
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         stopSong()
