@@ -5,13 +5,13 @@ struct TitleView: View {
     @StateObject var audioManager = AudioManager()
     var body: some View {
         NavigationStack {
-            ZStack {
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.purple, Color.blue]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
+//            ZStack {
+//                LinearGradient(
+//                    gradient: Gradient(colors: [Color.purple, Color.blue]),
+//                    startPoint: .top,
+//                    endPoint: .bottom
+//                )
+//                .ignoresSafeArea()
                 VStack{
                     Image("songle")
                     // Text("Songle 🎵")
@@ -69,7 +69,7 @@ struct TitleView: View {
                     //                    message: Text("• You have 6 tries to guess the correct song. 🎶\n\n• If you get it wrong, the song will play again. 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
                     //                    dismissButton: .default(Text("Got it!"))
                     //                )
-                }
+
             }
         }
     }
