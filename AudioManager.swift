@@ -94,5 +94,8 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         stopSong()
     }
+    var progressRatio: CGFloat {
+        duration > 0 ? CGFloat(currentTime / duration) : 0
+    }
 }
 
