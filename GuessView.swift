@@ -19,10 +19,14 @@ struct GuessView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                audioManager.backgroundColor
-                    .ignoresSafeArea()
-                    .animation(.easeInOut, value: audioManager.backgroundColor)
+                LinearGradient(
+                               colors: [.purple, .blue],
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing
+                           )
+                           .ignoresSafeArea()
                 VStack {
+                    
                     VStack {
                         Image("songle")
                             .resizable()
