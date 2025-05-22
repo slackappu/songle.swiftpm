@@ -5,23 +5,25 @@ struct TitleView: View {
     @StateObject var audioManager = AudioManager()
     var body: some View {
         NavigationStack {
-                VStack {
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.purple, Color.blue]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+                VStack{
                     Image("songle")
                     // Text("Songle 🎵")
                         .frame(width: 200, height: 170)
                         .font(.system(size: 85, weight: .bold))
-                        .foregroundStyle(
-                            LinearGradient(
-                                gradient: Gradient(colors: [.orange, .yellow, .red]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .foregroundStyle(Color.black)
                         .background(.black)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     //              .shadow(color: .red, radius: 11, x: 0, y: 0)
                         .shadow(color: .red, radius: 15, x: 0, y: 0)
+                    
                 }
                 Divider()
                 VStack(spacing: 15) {
@@ -67,6 +69,7 @@ struct TitleView: View {
                     //                    message: Text("• You have 6 tries to guess the correct song. 🎶\n\n• If you get it wrong, the song will play again. 👂\n\n• If you don't guess the correct song within 6 tries, the title will be revealed. 🎧"),
                     //                    dismissButton: .default(Text("Got it!"))
                     //                )
+                }
             }
         }
     }
