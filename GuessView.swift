@@ -135,7 +135,13 @@ struct GuessView: View {
                 }
             }
         }
-            .background(backgroundColor)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.white, Color(.systemGray5)]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
             .animation(.easeOut, value: backgroundColor)
         }
     func checkTheGuess(){
