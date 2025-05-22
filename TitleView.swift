@@ -13,16 +13,9 @@ struct TitleView: View {
 //                )
 //                .ignoresSafeArea()
                 VStack{
-                    Image("songle")
-                    // Text("Songle 🎵")
+                    Image("transongle")
                         .frame(width: 200, height: 170)
-                        .font(.system(size: 85, weight: .bold))
-                        .foregroundStyle(Color.black)
-                        .background(.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                    //              .shadow(color: .red, radius: 11, x: 0, y: 0)
-                        .shadow(color: .red, radius: 15, x: 0, y: 0)
+                        .shadow(color: .red, radius: 10, x: 0, y: 0)
                     
                 }
                 Divider()

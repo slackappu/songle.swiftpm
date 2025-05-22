@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "songle.png",
+      "filename" : "transongle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "songle-removebg-preview.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
