@@ -44,6 +44,8 @@ struct TitleView: View {
                     .shadow(color: .purple, radius: 22, x: 0, y: 0)
                     .padding()
                 Spacer(minLength: 200)
+            Text("Created by: Alex V, Aryan P, Leo J, & David N")
+                .font(.custom("Futura", size: 16))
                 Button {
                     showInstructions.toggle()
                 } label: {
