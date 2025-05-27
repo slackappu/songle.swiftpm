@@ -54,6 +54,7 @@ struct TitleView: View {
                         Text("How to Play")
                             .font(.custom("Futura", size: 32))
                             .underline()
+                            .foregroundStyle(.white)
                         VStack(spacing: 10){
                             Text("• A snippet of a song will play 👂        ")
                             Text("• You have 6 tries to guess the song 🎶")
