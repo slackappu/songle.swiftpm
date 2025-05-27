@@ -20,14 +20,18 @@ struct GuessView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                audioManager.backgroundColor
-                    .ignoresSafeArea()
-                    .animation(.easeInOut, value: audioManager.backgroundColor)
+                LinearGradient(
+                               colors: [.purple, .blue],
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing
+                           )
+                           .ignoresSafeArea()
                 VStack {
+                    
                     VStack {
-                        Image("songle")
-                            .resizable()
+                        Image("transongle")
                             .frame(width: 200, height: 200)
+                            .shadow(color: .red, radius: 10, x: 0, y: 0)
                         Text("Guess the Song 🎶")
                             .font(.custom("Futura", size: 30))
                             .fontWeight(.bold)
@@ -132,7 +136,7 @@ struct GuessView: View {
                         }) {
                             Image(systemName: "questionmark.circle.fill")
                                 .resizable()
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.orange)
                                 .frame(width: 35, height: 35)
                         }
                         .alert(isPresented: $Alerthi) {
