@@ -14,6 +14,7 @@ struct GuessView: View {
     @State var maxGuesses = false
     @State var backgroundColor: Color = .white
     @State var navigateBack = false
+    @State var albumCovers = ["dieLit", "NBTB", "SSS4U", "loveSick"]
     let correctAnswer = "long time"
     
     var body: some View {
@@ -30,6 +31,12 @@ struct GuessView: View {
                         Text("Guess the Song 🎶")
                             .font(.custom("Futura", size: 30))
                             .fontWeight(.bold)
+                        
+                        if isCorrect {
+                            Image(albumCovers[audioManager.songCount])
+                                .resizable()
+                                .frame(width: 150, height: 150)
+                        }
                         
                         ForEach(userPreviousGuesses, id: \.self) { guess in
                             HStack(alignment: .top) {
@@ -56,7 +63,7 @@ struct GuessView: View {
                             //                            } else {
                             //                                audioManager.startSong()
                             //                            }
-                            if guessCount >= 6 {
+                            if guessCount >= 6 || isCorrect {
                                 audioManager.startSong()
                             } else {
                                 audioManager.playPause()
@@ -142,16 +149,31 @@ struct GuessView: View {
                     }
                     
                     if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer })){
-                        NavigationLink(destination: TitleView(), isActive: $navigateBack) {
-                            Button("Go Back to Title View") {
-                                navigateBack = true
-                            }
-                            .font(.custom("Futura", size: 15))
-                            .padding()
-                            .background(.blue)
-                            .cornerRadius(10)
-                            .shadow(color: .purple, radius: 5)
+                        Button {
+                            isCorrect = false
+                            guessCount = 0
+                            audioManager.songCount += 1
+                            audioManager.startSong()
+                            userPreviousGuesses.removeAll()
+                        } label: {
+                            Text("Next Song")
+                                .font(.custom("Futura", size: 15))
+                                .padding()
+                                .background(.blue)
+                                .cornerRadius(10)
+                                .shadow(color: .purple, radius: 5)
                         }
+
+//                        NavigationLink(destination: TitleView(), isActive: $navigateBack) {
+//                            Button("Go Back to Title View") {
+//                                navigateBack = true
+//                            }
+//                            .font(.custom("Futura", size: 15))
+//                            .padding()
+//                            .background(.blue)
+//                            .cornerRadius(10)
+//                            .shadow(color: .purple, radius: 5)
+//                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -164,7 +186,7 @@ struct GuessView: View {
         let trimmedGuess = userGuess.trimmingCharacters(in: .whitespacesAndNewlines)
         userPreviousGuesses.append(trimmedGuess)
         
-        let answer = "long time"
+        let answer = audioManager.soundName[audioManager.songCount]
         isCorrect = trimmedGuess.lowercased() == answer
         showAlert = true
         userGuess = ""
