@@ -20,6 +20,7 @@ struct GuessView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+
                 LinearGradient(
                                colors: [.purple, .blue],
                                startPoint: .topLeading,

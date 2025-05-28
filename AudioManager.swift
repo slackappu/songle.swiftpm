@@ -91,7 +91,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             self.stopSong()
         }
     }
-
+                                                          
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         stopSong()
