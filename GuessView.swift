@@ -125,7 +125,7 @@ struct GuessView: View {
                     
                     TextField("Enter your song guess", text: $userGuess)
                         .background(
-                               LinearGradient(gradient: Gradient(colors: [.white.opacity(0.9), .gray.opacity(0.3)]),
+                               LinearGradient(gradient: Gradient(colors: [.orange.opacity(0.9), .white.opacity(0.9)]),
                                               startPoint: .topLeading,
                                               endPoint: .bottomTrailing)
                            )
