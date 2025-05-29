@@ -110,7 +110,7 @@ struct TitleView: View {
 //                        .cornerRadius(10)
 //                        .shadow(color: .purple, radius: 22, x: 0, y: 0)
 //                        .padding()
-                    Text("Created by: Alex V, Aryan P, Leo J, & David N")
+                    Text("Created by: Alex V, Aryan P, Leo J, & David N \nJohn Hersey High School \n© 2025")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
 //                    Button {
