@@ -30,9 +30,6 @@ struct TitleView: View {
                 //                    //                        .foregroundColor(.white)
                 //                    //                        .shadow(color: .black.opacity(0.7), radius: 5, x: 2, y: 2)
                 //                }
-                Divider()
-                    .background(Color.white.opacity(0.7))
-                    .padding(.horizontal, 40)
                 VStack //(alignment: .leading, spacing: 12)
                 {
  
@@ -56,13 +53,13 @@ struct TitleView: View {
                                 
                         }
                     
-                    Divider()
-                    
+            
+                
                         Text("How to Play")
                             .font(.custom("Futura", size: 32))
                             .underline()
                             .foregroundStyle(.white)
-                        VStack(spacing: 10){
+                        VStack(alignment:.center ,spacing: 10){
                             Text("• A snippet of a song will play 👂        ")
                             Text("• You have 6 tries to guess the song 🎶")
                             Text("• Try to guess as fast as you can! 💨")
@@ -71,7 +68,7 @@ struct TitleView: View {
                         .foregroundColor(.white.opacity(0.85))
                         .frame(maxWidth: 350, alignment: .leading)
                         .shadow(color: .black.opacity(0.3), radius: 3, x: 1, y: 1)
-                        
+
                         Divider()
                             .background(Color.white.opacity(0.7))
                             .padding(.horizontal, 40)
