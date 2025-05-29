@@ -124,11 +124,20 @@ struct GuessView: View {
 
                     
                     TextField("Enter your song guess", text: $userGuess)
-                        .background(.gray)
-                        .foregroundStyle(.black)
-                        .font(.custom("Futura", size: 18))
-                        .multilineTextAlignment(.center)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .background(
+                               LinearGradient(gradient: Gradient(colors: [.orange.opacity(0.9), .white.opacity(0.9)]),
+                                              startPoint: .topLeading,
+                                              endPoint: .bottomTrailing)
+                           )
+                           .cornerRadius(15)
+                           .overlay(
+                               RoundedRectangle(cornerRadius: 15)
+                                   .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                           )
+                           .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 2)
+                           .foregroundStyle(.black)
+                           .font(.custom("Futura", size: 18))
+                           .multilineTextAlignment(.center)
                         .disabled(isCorrect)
                         .onSubmit {
                             if guessCount >= 6 {

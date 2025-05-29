@@ -43,11 +43,18 @@ struct TitleView: View {
                     //                    endPoint: .bottom
                     //                )
                     VStack(spacing: 15) {
-                
-                        Image("transongle")
-                            .frame(width: 200, height: 170)
-                            .shadow(color: .red, radius: 10, x: 0, y: 0)
-                        
+                        ZStack {
+                            Circle()
+                                .stroke(Color.orange, lineWidth: 6)
+                                .frame(width: 220, height: 220)
+                                .shadow(color: .red, radius: 10, x: 0, y: 0)
+                            Image("transongle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .shadow(color: .red, radius: 10, x: 0, y: 0)
+                                
+                        }
                     
                     Divider()
                     
