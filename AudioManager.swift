@@ -28,7 +28,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.play()
             isPlaying = true
             startTimer()
-            autoStop()
+           // autoStop()
         } catch {
             print("Error: \(error.localizedDescription) from creating audio player")
         }
@@ -46,7 +46,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         } else {
             player.play()
             isPlaying = true
-            autoStop()
+          //  autoStop()
         }
     }
     
@@ -60,7 +60,7 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         player.play()
         isPlaying = true
         startTimer()
-        autoStop()
+       // autoStop()
     }
 
     func stopSong() {

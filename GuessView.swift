@@ -57,7 +57,7 @@ struct GuessView: View {
                             HStack(alignment: .top) {
                                 Text("•")
                                 Text(guess)
-                                    .foregroundStyle(guess.lowercased() == correctAnswer ? .green : .gray)
+                                    .foregroundStyle(guess.lowercased() == audioManager.soundName[audioManager.songCount] ? .green : .gray)
                             }
                         }
                         .font(.custom("Futura", size: 16))
@@ -165,7 +165,7 @@ struct GuessView: View {
                         }
                     }
                     
-                    if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == correctAnswer })){
+                    if isCorrect || (guessCount >= 6 && !userPreviousGuesses.contains(where: { $0.lowercased() == audioManager.soundName[audioManager.songCount] })){
                         Button {
                             isCorrect = false
                             guessCount = 0
