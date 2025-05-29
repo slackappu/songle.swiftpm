@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import UIKit
 
 struct GuessView: View {
     @StateObject var audioManager = AudioManager()
@@ -87,6 +88,7 @@ struct GuessView: View {
                         } label: {
                             Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                                 .resizable()
+                                .foregroundStyle(.yellow)
                                 .frame(width: 35, height: 35)
                         }
                         Button(action: {
@@ -94,7 +96,7 @@ struct GuessView: View {
                         }) {
                             Image(systemName: "arrow.clockwise.circle.fill")
                                 .resizable()
-                                .foregroundColor(.blue)
+                                .foregroundStyle(.blue)
                                 .frame(width: 35, height: 35)
                                 .opacity(audioManager.isPlaying ? 1.0 : 0.4)
                         }
@@ -124,19 +126,15 @@ struct GuessView: View {
 
                     
                     TextField("Enter your song guess", text: $userGuess)
-                        .background(
-                               LinearGradient(gradient: Gradient(colors: [.orange.opacity(0.9), .white.opacity(0.9)]),
-                                              startPoint: .topLeading,
-                                              endPoint: .bottomTrailing)
-                           )
+                        .background(.black)
                            .cornerRadius(15)
                            .overlay(
                                RoundedRectangle(cornerRadius: 15)
                                    .stroke(Color.white.opacity(0.5), lineWidth: 1)
                            )
                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 2)
-                           .foregroundStyle(.black)
                            .font(.custom("Futura", size: 18))
+                           .foregroundStyle(.white)
                            .multilineTextAlignment(.center)
                         .disabled(isCorrect)
                         .onSubmit {
@@ -152,7 +150,7 @@ struct GuessView: View {
                         .foregroundStyle(.gray)
                         .padding(.bottom, 10)
                     
-                    if guessCount >= 2 {
+                    if guessCount >= 2 && !isCorrect {
                         Button(action: {
                             Alerthi = true
                         }) {
