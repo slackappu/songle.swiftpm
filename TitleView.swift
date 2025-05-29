@@ -54,6 +54,7 @@ struct TitleView: View {
                         Text("How to Play")
                             .font(.custom("Futura", size: 32))
                             .underline()
+                            .foregroundStyle(.white)
                         VStack(spacing: 10){
                             Text("• A snippet of a song will play 👂        ")
                             Text("• You have 6 tries to guess the song 🎶")
@@ -91,10 +92,10 @@ struct TitleView: View {
                         Spacer(minLength: 40)
                     }
                     .padding()
-                    .frame(width:350, alignment: .leading)
+                    .frame(width:360, alignment: .leading)
                     .opacity(0.75)
                     .font(.custom("Futura", size: 18))
-                    Divider()
+                     
 //                    Spacer()
 //                    NavigationLink("Start the game!", destination: GuessView())
 //                        .frame(width: 300, height: 100)
@@ -105,9 +106,9 @@ struct TitleView: View {
 //                        .cornerRadius(10)
 //                        .shadow(color: .purple, radius: 22, x: 0, y: 0)
 //                        .padding()
-                    Spacer(minLength: 200)
                     Text("Created by: Alex V, Aryan P, Leo J, & David N")
                         .font(.custom("Futura", size: 16))
+                        .foregroundStyle(.gray)
 //                    Button {
 //                        showInstructions.toggle()
 //                    } label: {

@@ -20,6 +20,7 @@ struct GuessView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+
                 LinearGradient(
                                colors: [.purple, .blue],
                                startPoint: .topLeading,
@@ -39,7 +40,9 @@ struct GuessView: View {
                                 .scaledToFit()
                                 .frame(width: 200, height: 200)
                                 .shadow(color: .red, radius: 10, x: 0, y: 0)
+                                
                         }
+                        .padding(.bottom,20)
                         Text("Guess the Song 🎶")
                             .font(.custom("Futura", size: 30))
                             .fontWeight(.bold)
