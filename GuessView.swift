@@ -121,10 +121,11 @@ struct GuessView: View {
 
                     
                     TextField("Enter your song guess", text: $userGuess)
+                        .background(.gray)
+                        .foregroundStyle(.black)
                         .font(.custom("Futura", size: 18))
                         .multilineTextAlignment(.center)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
                         .disabled(isCorrect)
                         .onSubmit {
                             if guessCount >= 6 {
@@ -133,6 +134,7 @@ struct GuessView: View {
                                 checkTheGuess()
                             }
                         }
+                        .frame(width: 300)
                     Text("Make sure you have proper spelling and spacing!")
                         .font(.custom("Futura", size: 16))
                         .foregroundStyle(.gray)
@@ -188,8 +190,9 @@ struct GuessView: View {
 //                        }
                     }
                 }
+                .foregroundStyle(.white)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(.white)
+                .background(.black)
                 .animation(.easeInOut, value: audioManager.backgroundColor)
             }
         }
